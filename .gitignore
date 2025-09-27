@@ -212,3 +212,4 @@ __marimo__/
 
 # Containerlab files
 clab-*
+*.token
