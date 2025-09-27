@@ -209,3 +209,6 @@ __marimo__/
 # Image files
 .DS_Store
 *.tar.xz
+
+# Containerlab files
+clab-*
