@@ -15,6 +15,7 @@ RUN echo "root:root" | chpasswd
 
 COPY daemons /etc/frr/daemons
 COPY vtysh.conf /etc/frr/vtysh.conf
+COPY lldp.conf /etc/lldpd.d/lldpd.conf
 
 RUN chown frr:frr /etc/frr/daemons /etc/frr/vtysh.conf
 

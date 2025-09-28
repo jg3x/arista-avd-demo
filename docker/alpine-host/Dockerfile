@@ -13,6 +13,9 @@ RUN ssh-keygen -b 2048 -t rsa -N "" -f /etc/ssh/ssh_host_rsa_key -q
 # add default password for root user
 RUN echo "root:root" | chpasswd
 
+COPY sshd_config /etc/ssh/sshd_config
+COPY lldp.conf /etc/lldpd.d/lldpd.conf
+
 EXPOSE 22
 
 COPY entrypoint.sh /root/entrypoint.sh
