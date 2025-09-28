@@ -6,68 +6,62 @@ topology:
   kinds:
     arista_ceos:
       image: ceos:4.34.2F
+      env:
+        CLAB_MGMT_VRF: mgmt
+      startup-config: config/eos/default_startup.cfg
+    linux:
+        image: avd/alpine:3.19.7
+  groups:
+    spine:
+      kind: arista_ceos
+      startup-config: config/eos/default_startup.cfg
+    leaf:
+      kind: arista_ceos
+      startup-config: config/eos/default_startup.cfg
+    servers:
+      kind: linux
   nodes:
   # site 1
     s1-spine1:
-      kind: arista_ceos
       group: spine
     s1-spine2:
-      kind: arista_ceos
       group: spine
     s1-leaf1:
-      kind: arista_ceos
       group: leaf
     s1-leaf2:
-      kind: arista_ceos
       group: leaf
     s1-leaf3:
-      kind: arista_ceos
       group: leaf
     s1-leaf4:
-      kind: arista_ceos
       group: leaf
     s1-brdr1:
-      kind: arista_ceos
       group: leaf
     s1-brdr2:
-      kind: arista_ceos
       group: leaf
     s1-host1:
-      kind: arista_ceos
       group: servers
     s1-host2:
-      kind: arista_ceos
       group: servers
   # site 2
     s2-spine1:
-      kind: arista_ceos
       group: spine
     s2-spine2:
-      kind: arista_ceos
       group: spine
     s2-leaf1:
-      kind: arista_ceos
       group: leaf
     s2-leaf2:
-      kind: arista_ceos
       group: leaf
     s2-leaf3:
-      kind: arista_ceos
       group: leaf
     s2-leaf4:
-      kind: arista_ceos
       group: leaf
     s2-brdr1:
-      kind: arista_ceos
       group: leaf
     s2-brdr2:
-      kind: arista_ceos
       group: leaf
     s2-host1:
-      kind: arista_ceos
       group: servers
     s2-host2:
-      kind: arista_ceos
       group: servers
   links:
   # site 1
