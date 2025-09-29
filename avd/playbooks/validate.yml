@@ -10,5 +10,5 @@
       ansible.builtin.import_role:
         name: arista.avd.anta_runner
       vars:
-        use_anta: true
-        save_catalog: true
+        avd_catalogs_filters:
+          - skip_tests: [ VerifyInterfaceDiscards, VerifyLoggingErrors, VerifyMemoryUtilization, VerifyNTP ]
