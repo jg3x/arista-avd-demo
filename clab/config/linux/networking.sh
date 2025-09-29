@@ -19,11 +19,11 @@ ip link set dev eth2 master bond0
 ip link set dev bond0 master vrf_prod
 if [ "$HOSTNAME" == "s1-host1" ]; then
 ip addr add 10.10.10.100/24 dev bond0
-elif  [ "$HOSTNAME" == "s1-host2"]; then
+elif  [ "$HOSTNAME" == "s1-host2" ]; then
 ip addr add 10.20.20.100/24 dev bond0
-elif  [ "$HOSTNAME" == "s2-host1"]; then
+elif  [ "$HOSTNAME" == "s2-host1" ]; then
 ip addr add 10.10.10.200/24 dev bond0
-elif  [ "$HOSTNAME" == "s2-host2"]; then
+elif  [ "$HOSTNAME" == "s2-host2" ]; then
 ip addr add 10.20.20.200/24 dev bond0
 fi
 
