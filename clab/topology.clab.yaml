@@ -93,12 +93,12 @@ topology:
   links:
   # site 1
   ## mlag links
-  - endpoints: ["s1-spine1:eth1", "s1-spine2:eth1"]
-  - endpoints: ["s1-spine1:eth6", "s1-spine2:eth6"]
   - endpoints: ["s1-leaf1:eth1", "s1-leaf2:eth1"]
   - endpoints: ["s1-leaf1:eth6", "s1-leaf2:eth6"]
   - endpoints: ["s1-leaf3:eth1", "s1-leaf4:eth1"]
   - endpoints: ["s1-leaf3:eth6", "s1-leaf4:eth6"]
+  - endpoints: ["s1-brdr1:eth1", "s1-brdr2:eth1"]
+  - endpoints: ["s1-brdr1:eth6", "s1-brdr2:eth6"]
   ## fabric links
   - endpoints: ["s1-spine1:eth2", "s1-leaf1:eth2"]
   - endpoints: ["s1-spine1:eth3", "s1-leaf2:eth2"]
@@ -121,12 +121,12 @@ topology:
 
 # site 2
 ## mlag links
-  - endpoints: ["s2-spine1:eth1", "s2-spine2:eth1"]
-  - endpoints: ["s2-spine1:eth6", "s2-spine2:eth6"]
   - endpoints: ["s2-leaf1:eth1", "s2-leaf2:eth1"]
   - endpoints: ["s2-leaf1:eth6", "s2-leaf2:eth6"]
   - endpoints: ["s2-leaf3:eth1", "s2-leaf4:eth1"]
   - endpoints: ["s2-leaf3:eth6", "s2-leaf4:eth6"]
+  - endpoints: ["s2-brdr1:eth1", "s2-brdr2:eth1"]
+  - endpoints: ["s2-brdr1:eth6", "s2-brdr2:eth6"]
 ## fabric links
   - endpoints: ["s2-spine1:eth2", "s2-leaf1:eth2"]
   - endpoints: ["s2-spine1:eth3", "s2-leaf2:eth2"]
