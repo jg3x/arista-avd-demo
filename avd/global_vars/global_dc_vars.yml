@@ -43,7 +43,10 @@ mgmt_interface_vrf: mgmt
 # NTP Servers IP or DNS name, first NTP server will be preferred, and sourced from Management VRF
 ntp:
   servers:
-    - name: 0.ch.pool.ntp.org
+    - name: 85.195.227.68
+      iburst: true
+      local_interface: Management1
+    - name: 130.60.204.10
       iburst: true
       local_interface: Management1
 
@@ -55,7 +58,7 @@ ip_name_servers:
   - ip_address: 8.8.4.4
     vrf: mgmt
     priority: 1
-dns_domain: avd.lab
+# dns_domain: avd.lab
 
 # TerminAttr
 daemon_terminattr:
