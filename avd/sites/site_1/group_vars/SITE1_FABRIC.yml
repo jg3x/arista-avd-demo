@@ -42,24 +42,25 @@ l3leaf:
         - name: s1-leaf1
           id: 1
           mgmt_ip: 192.168.0.12/24
-          uplink_switch_interfaces: [ Ethernet2, Ethernet2 ]
+          uplink_switch_interfaces: [ Ethernet2/1, Ethernet2/1 ]
         - name: s1-leaf2
           id: 2
           mgmt_ip: 192.168.0.13/24
-          uplink_switch_interfaces: [ Ethernet3, Ethernet3 ]
+          uplink_switch_interfaces: [ Ethernet3/1, Ethernet3/1 ]
     - group: S1_RACK2
       bgp_as: 65102
       nodes:
         - name: s1-leaf3
           id: 3
           mgmt_ip: 192.168.0.14/24
-          uplink_switch_interfaces: [ Ethernet4, Ethernet4 ]
+          uplink_switch_interfaces: [ Ethernet4/1, Ethernet4/1 ]
         - name: s1-leaf4
           id: 4
           mgmt_ip: 192.168.0.15/24
-          uplink_switch_interfaces: [ Ethernet5, Ethernet5 ]
+          uplink_switch_interfaces: [ Ethernet5/1, Ethernet5/1 ]
     - group: S1_BRDR
       bgp_as: 65103
+      vtep: false
       # evpn_gateway:
       #   evpn_l2:
       #     enabled: true
@@ -70,7 +71,7 @@ l3leaf:
         - name: s1-brdr1
           id: 5
           mgmt_ip: 192.168.0.100/24
-          uplink_switch_interfaces: [ Ethernet7, Ethernet7 ]
+          uplink_switch_interfaces: [ Ethernet7/1, Ethernet7/1 ]
           # evpn_gateway:
           #   remote_peers: 
           #     - hostname: s2-brdr1
@@ -79,7 +80,7 @@ l3leaf:
         - name: s1-brdr2
           id: 6
           mgmt_ip: 192.168.0.101/24
-          uplink_switch_interfaces: [ Ethernet8, Ethernet8 ]
+          uplink_switch_interfaces: [ Ethernet8/1, Ethernet8/1 ]
           # evpn_gateway:
           #   remote_peers: 
           #     - hostname: s2-brdr2
