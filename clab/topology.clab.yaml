@@ -26,24 +26,37 @@ topology:
         - config/eos/EosIntfMapping/DCS-7280SR3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
     server:
       kind: linux
+      binds:
+        - config/linux/networking.sh:/root/networking.sh:ro
+        - config/linux/etc_hosts.txt:/etc/hosts:ro
+      exec:
+        - bash /root/networking.sh
   nodes:
   # site 1
     s1-spine1:
       group: spine
+      mgmt-ipv4: 192.168.0.10
     s1-spine2:
       group: spine
+      mgmt-ipv4: 192.168.0.11
     s1-leaf1:
       group: leaf
+      mgmt-ipv4: 192.168.0.12
     s1-leaf2:
       group: leaf
+      mgmt-ipv4: 192.168.0.13
     s1-leaf3:
       group: leaf
+      mgmt-ipv4: 192.168.0.14
     s1-leaf4:
       group: leaf
+      mgmt-ipv4: 192.168.0.15
     s1-brdr1:
       group: border
+      mgmt-ipv4: 192.168.0.100
     s1-brdr2:
       group: border
+      mgmt-ipv4: 192.168.0.101
     s1-host1:
       group: server
     s1-host2:
@@ -51,20 +64,28 @@ topology:
   # site 2
     s2-spine1:
       group: spine
+      mgmt-ipv4: 192.168.0.20
     s2-spine2:
       group: spine
+      mgmt-ipv4: 192.168.0.21
     s2-leaf1:
       group: leaf
+      mgmt-ipv4: 192.168.0.22
     s2-leaf2:
       group: leaf
+      mgmt-ipv4: 192.168.0.23
     s2-leaf3:
       group: leaf
+      mgmt-ipv4: 192.168.0.24
     s2-leaf4:
       group: leaf
+      mgmt-ipv4: 192.168.0.25
     s2-brdr1:
       group: border
+      mgmt-ipv4: 192.168.0.200
     s2-brdr2:
       group: border
+      mgmt-ipv4: 192.168.0.201
     s2-host1:
       group: server
     s2-host2:
