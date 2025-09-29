@@ -1,7 +1,7 @@
 {
     "name": "arista-avd-demo",
     "image":"ghcr.io/aristanetworks/avd/universal:python3.12-avd-v5.7.0",
-    "onCreateCommand": "bash -c \"$(curl -sL https://get.containerlab.dev)\" -- -v 0.70.2",
+    "onCreateCommand": "bash -c \"$(curl -sL https://get.containerlab.dev)\" -- -v 0.70.2; pip3 install passlib",
     "features": {
         // Containerlab will run in a docker-in-docker container
         // it is also possible to use docker-outside-docker feature
