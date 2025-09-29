@@ -1,6 +1,6 @@
 ---
 # Credentials for CVP (legacy arista.avd.eos_config_deploy_cvp role) and EOS Switches
-ansible_user: arista
+ansible_user: admin
 ansible_password: "{{ lookup('env', 'LABPASSPHRASE') }}"
 ansible_network_os: arista.eos.eos
 # Configure privilege escalation
@@ -25,11 +25,11 @@ execute_tasks: true
 
 # Local Users
 local_users:
-  - name: arista
+  - name: admin
     privilege: 15
     role: network-admin
     sha512_password: "{{ ansible_password | password_hash('sha512', salt='arista', rounds=5000) }}"
-    ssh_key: "{{ lookup('ansible.builtin.file', '~/.ssh/id_rsa.pub') }}"
+    ssh_key: "{{ lookup('ansible.builtin.file', '~/.ssh/id_ecdsa.pub') }}"
 
 # AAA
 aaa_authorization:
@@ -38,17 +38,24 @@ aaa_authorization:
 
 # OOB Management network default gateway.
 mgmt_gateway: 192.168.0.1
-mgmt_interface_vrf: default
+mgmt_interface_vrf: mgmt
 
 # NTP Servers IP or DNS name, first NTP server will be preferred, and sourced from Management VRF
 ntp:
   servers:
-    - name: 192.168.0.1
+    - name: 0.ch.pool.ntp.org
       iburst: true
-      local_interface: Management0
+      local_interface: Management1
 
 # Domain/DNS
-dns_domain: atd.lab
+ip_name_servers:
+  - ip_address: 8.8.8.8
+    vrf: mgmt
+    priority: 0
+  - ip_address: 8.8.4.4
+    vrf: mgmt
+    priority: 1
+dns_domain: avd.lab
 
 # TerminAttr
 daemon_terminattr:
@@ -56,7 +63,7 @@ daemon_terminattr:
   # TCP 9910 is used on on-prem
   # TCP 443 is used on CV as a Service
   cvaddrs: # For single cluster
-    - 192.168.0.5:9910
+    - www.cv-staging.corp.arista.io:443
   # Authentication scheme used to connect to CloudVision
   cvauth:
     method: token
