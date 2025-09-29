@@ -81,13 +81,13 @@ underlay_routing_protocol: ebgp
 overlay_routing_protocol: ebgp
 
 # Configure password authentication for BGP peerings
-bgp_peer_groups:
-  evpn_overlay_peers:
-    password: Q4fqtbqcZ7oQuKfuWtNGRQ==
-  ipv4_underlay_peers:
-    password: 7x4B4rnJhZB438m9+BrBfQ==
-  mlag_ipv4_underlay_peer:
-    password: 4b21pAdCvWeAqpcKDFMdWw==
+# bgp_peer_groups:
+#   evpn_overlay_peers:
+#     password: "Q4fqtbqcZ7oQuKfuWtNGRQ=="
+#   ipv4_underlay_peers:
+#     password: "7x4B4rnJhZB438m9+BrBfQ=="
+#   mlag_ipv4_underlay_peer:
+#     password: "4b21pAdCvWeAqpcKDFMdWw=="
 
 # # L3 Edge port definitions. This can be any port in the entire Fabric, where IP interfaces are defined.
 # l3_edge:
