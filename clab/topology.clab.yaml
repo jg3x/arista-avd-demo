@@ -14,11 +14,17 @@ topology:
   groups:
     spine:
       kind: arista_ceos
-      startup-config: config/eos/default_startup.cfg
+      binds:
+        - config/eos/EosIntfMapping/DCS-7050CX3-32S.json:/mnt/flash/EosIntfMapping.json:ro
     leaf:
       kind: arista_ceos
-      startup-config: config/eos/default_startup.cfg
-    servers:
+      binds:
+        - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
+    border:
+      kind: arista_ceos
+      binds:
+        - config/eos/EosIntfMapping/DCS-7280SR3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
+    server:
       kind: linux
   nodes:
   # site 1
@@ -35,13 +41,13 @@ topology:
     s1-leaf4:
       group: leaf
     s1-brdr1:
-      group: leaf
+      group: border
     s1-brdr2:
-      group: leaf
+      group: border
     s1-host1:
-      group: servers
+      group: server
     s1-host2:
-      group: servers
+      group: server
   # site 2
     s2-spine1:
       group: spine
@@ -56,13 +62,13 @@ topology:
     s2-leaf4:
       group: leaf
     s2-brdr1:
-      group: leaf
+      group: border
     s2-brdr2:
-      group: leaf
+      group: border
     s2-host1:
-      group: servers
+      group: server
     s2-host2:
-      group: servers
+      group: server
   links:
   # site 1
   ## mlag links
