@@ -112,7 +112,7 @@ l3_edge:
       profile: S1_to_S2_profile
     - id: 2
       nodes: [ s1-brdr2, s2-brdr2 ]
-      interfaces: [ Ethernet5, Ethernet5 ]
+      interfaces: [ Ethernet4, Ethernet4 ]
       profile: S1_to_S2_profile
 
 
