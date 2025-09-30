@@ -108,11 +108,11 @@ l3_edge:
   p2p_links:
     - id: 1
       nodes: [ s1-brdr1, s2-brdr1 ]
-      interfaces: [ Ethernet4, Ethernet4 ]
+      interfaces: [ Ethernet55/1, Ethernet55/1 ]
       profile: S1_to_S2_profile
     - id: 2
       nodes: [ s1-brdr2, s2-brdr2 ]
-      interfaces: [ Ethernet4, Ethernet4 ]
+      interfaces: [ Ethernet55/1, Ethernet55/1 ]
       profile: S1_to_S2_profile
 
 # # CloudVision Topology Tags

@@ -29,9 +29,9 @@ l3leaf:
     loopback_ipv4_offset: 2
     vtep_loopback_ipv4_pool: 10.255.2.0/24
     uplink_switches: [ s2-spine1, s2-spine2 ]
-    uplink_interfaces: [ Ethernet2, Ethernet3 ]
+    uplink_interfaces: [ Ethernet51/1, Ethernet52/1 ]
     uplink_ipv4_pool: 172.16.2.0/24
-    mlag_interfaces: [ Ethernet1, Ethernet6 ]
+    mlag_interfaces: [ Ethernet49/1, Ethernet50/1 ]
     mlag_peer_ipv4_pool: 10.251.2.0/24
     mlag_peer_l3_ipv4_pool: 10.252.2.0/24
     virtual_router_mac_address: 00:1c:73:00:00:99
@@ -42,22 +42,22 @@ l3leaf:
         - name: s2-leaf1
           id: 1
           mgmt_ip: 192.168.0.22/24
-          uplink_switch_interfaces: [ Ethernet2/1, Ethernet2/1 ]
+          uplink_switch_interfaces: [ Ethernet1/1, Ethernet1/1 ]
         - name: s2-leaf2
           id: 2
           mgmt_ip: 192.168.0.23/24
-          uplink_switch_interfaces: [ Ethernet3/1, Ethernet3/1 ]
+          uplink_switch_interfaces: [ Ethernet2/1, Ethernet2/1 ]
     - group: S2_RACK2
       bgp_as: 65202
       nodes:
         - name: s2-leaf3
           id: 3
           mgmt_ip: 192.168.0.24/24
-          uplink_switch_interfaces: [ Ethernet4/1, Ethernet4/1 ]
+          uplink_switch_interfaces: [ Ethernet3/1, Ethernet3/1 ]
         - name: s2-leaf4
           id: 4
           mgmt_ip: 192.168.0.25/24
-          uplink_switch_interfaces: [ Ethernet5/1, Ethernet5/1 ]
+          uplink_switch_interfaces: [ Ethernet4/1, Ethernet4/1 ]
     - group: S2_BRDR
       bgp_as: 65203
       evpn_gateway:
@@ -70,7 +70,7 @@ l3leaf:
         - name: s2-brdr1
           id: 5
           mgmt_ip: 192.168.0.200/24
-          uplink_switch_interfaces: [ Ethernet7/1, Ethernet7/1 ]
+          uplink_switch_interfaces: [ Ethernet31/1, Ethernet31/1 ]
           evpn_gateway:
             remote_peers: 
               - hostname: s1-brdr1
@@ -79,7 +79,7 @@ l3leaf:
         - name: s2-brdr2
           id: 6
           mgmt_ip: 192.168.0.201/24
-          uplink_switch_interfaces: [ Ethernet8/1, Ethernet8/1 ]
+          uplink_switch_interfaces: [ Ethernet32/1, Ethernet32/1 ]
           evpn_gateway:
             remote_peers: 
               - hostname: s1-brdr2

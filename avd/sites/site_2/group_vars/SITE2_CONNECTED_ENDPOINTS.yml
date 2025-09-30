@@ -24,7 +24,7 @@ servers:
     rack: RACK1                                         # Informational RACK (optional)
     adapters:
       - endpoint_ports: [ eth1, eth2 ]                  # Server port to connect (optional)
-        switch_ports: [ Ethernet4, Ethernet4 ]          # Switch port to connect server (required)
+        switch_ports: [ Ethernet1, Ethernet1 ]          # Switch port to connect server (required)
         switches: [ s2-leaf1,s2-leaf2 ]                 # Switch to connect server (required)
         profile: PP-VLAN10                              # Port profile to apply (required)
         port_channel:
@@ -38,7 +38,7 @@ servers:
     rack: RACK2                                         # Informational RACK (optional)
     adapters:
       - endpoint_ports: [ eth1, eth2 ]                  # Server port to connect (optional)
-        switch_ports: [ Ethernet4, Ethernet4 ]          # Switch port to connect server (required)
+        switch_ports: [ Ethernet1, Ethernet1 ]          # Switch port to connect server (required)
         switches: [ s2-leaf3, s2-leaf4 ]                # Switch to connect server (required)
         profile: PP-VLAN20                              # Port profile to apply (required)
         port_channel:
