@@ -66,11 +66,11 @@ daemon_terminattr:
   # TCP 9910 is used on on-prem
   # TCP 443 is used on CV as a Service
   cvaddrs: # For single cluster
-    - www.cv-staging.corp.arista.io:443
+    - apiserver.cv-staging.corp.arista.io:443
   # Authentication scheme used to connect to CloudVision
   cvauth:
     method: token
-    token_file: "/tmp/token"
+    token_file: "/mnt/flash/cv-onboarding-token"
   # Exclude paths from Sysdb on the ingest side
   ingestexclude: /Sysdb/cell/1/agent,/Sysdb/cell/2/agent
   # Exclude paths from the shared memory table
@@ -114,5 +114,9 @@ l3_edge:
       nodes: [ s1-brdr2, s2-brdr2 ]
       interfaces: [ Ethernet4, Ethernet4 ]
       profile: S1_to_S2_profile
+
+# # CloudVision Topology Tags
+generate_cv_tags:
+  topology_hints: true
 
 
