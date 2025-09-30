@@ -3,7 +3,7 @@ tenants:
   - name: S1_FABRIC
     mac_vrf_vni_base: 10000
     vrfs:
-      - name: OVERLAY
+      - name: PROD
         vrf_vni: 10
         svis:
           - id: 10
