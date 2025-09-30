@@ -15,8 +15,8 @@ ansible_python_interpreter: $(which python3)
 avd_data_validation_mode: error
 
 # arista.avd.cv_deploy role parameters
-cv_token: # Fill in here with a CloudVision Service Account Token
-cv_server: cvp
+cv_server: "{{ lookup('env','CV_SERVER') }}"
+cv_token: "{{ lookup('env','CV_TOKEN') }}"
 cv_verify_certs: false
 
 # arista.avd.eos_config_deploy_cvp role parameters

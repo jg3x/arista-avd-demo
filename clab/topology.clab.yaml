@@ -8,7 +8,7 @@ topology:
       image: ceos:4.34.2F
       env:
         CLAB_MGMT_VRF: mgmt
-        CVADDR: ${CV_SERVER:=none}
+        CVADDR: ${CV_TATTR_ADDR:=none}
       startup-config: config/eos/default_startup.cfg
       binds:
         - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
