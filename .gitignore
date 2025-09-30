@@ -213,3 +213,8 @@ __marimo__/
 # Containerlab files
 clab-*
 *.token
+
+# AVD artifacts
+avd/sites/*/documentation/*
+avd/sites/*/intended/*
+avd/sites/*/config_backup/*
