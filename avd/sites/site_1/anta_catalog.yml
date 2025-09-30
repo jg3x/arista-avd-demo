@@ -1,0 +1,32 @@
+---
+anta.tests.software:
+  - VerifyEOSVersion: # Verifies the device is running one of the allowed EOS version.
+      versions: # List of allowed EOS versions.
+        - 4.25.4M
+        - 4.26.1F
+        - '4.34.2F-43237028.4342F (engineering build)'
+  - VerifyTerminAttrVersion:
+      versions:
+        - v1.22.1
+        - v1.40.0
+
+anta.tests.system:
+  - VerifyUptime: # Verifies the device uptime is higher than a value.
+      minimum: 1
+
+anta.tests.routing:
+  generic:
+    - VerifyIPv4RouteType:
+        routes_entries:
+          - prefix: 10.20.20.200/32
+            vrf: PROD
+            route_type: eBGP
+        filters:
+          tags: ['site1']
+    - VerifyIPv4RouteType:
+        routes_entries:
+          - prefix: 10.20.20.100/32
+            vrf: PROD
+            route_type: eBGP
+        filters:
+          tags: ['site2']
