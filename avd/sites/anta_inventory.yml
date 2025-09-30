@@ -1,0 +1,52 @@
+anta_inventory:
+  hosts:
+  # site 1
+  - host: 192.168.0.10
+    name: s1-spine1
+    tags: ['fabric', 'spine']
+  - host: 192.168.0.11
+    name: s1-spine2
+    tags: ['fabric', 'spine']
+  - host: 192.168.0.12
+    name: s1-leaf1
+    tags: ['fabric', 'leaf', 'site1']
+  - host: 192.168.0.13
+    name: s1-leaf2
+    tags: ['fabric', 'leaf', 'site1']
+  - host: 192.168.0.14
+    name: s1-leaf3
+    tags: ['fabric', 'leaf', 'site1']
+  - host: 192.168.0.15
+    name: s1-leaf4
+    tags: ['fabric', 'leaf', 'site1']
+  - host: 192.168.0.100
+    name: s1-brdr1
+    tags: ['fabric', 'leaf']
+  - host: 192.168.0.101
+    name: s1-brdr2
+    tags: ['fabric', 'leaf']
+  # site 2
+  - host: 192.168.0.20
+    name: s2-spine1
+    tags: ['fabric', 'spine']
+  - host: 192.168.0.21
+    name: s2-spine2
+    tags: ['fabric', 'spine']
+  - host: 192.168.0.22
+    name: s2-leaf1
+    tags: ['fabric', 'leaf', 'site2']
+  - host: 192.168.0.23
+    name: s2-leaf2
+    tags: ['fabric', 'leaf', 'site2']
+  - host: 192.168.0.24
+    name: s2-leaf3
+    tags: ['fabric', 'leaf', 'site2']
+  - host: 192.168.0.25
+    name: s2-leaf4
+    tags: ['fabric', 'leaf', 'site2']
+  - host: 192.168.0.200
+    name: s2-brdr1
+    tags: ['fabric', 'leaf']
+  - host: 192.168.0.201
+    name: s2-brdr2
+    tags: ['fabric', 'leaf']

@@ -30,10 +30,6 @@ cvp-site-1: ## Deploy Configs via CloudVision Static Configuration Studio
 validate-site-1: ## Validate network state
 	ansible-playbook playbooks/validate.yml -i sites/site_1/inventory.yml -e "target_hosts=SITE1_FABRIC"
 
-.PHONY: run-nrfu-site-1
-run-nrfu-site-1: ## Validate network state using anta cli
-	anta nrfu -i sites/site_1/anta_inventory.yml -c sites/site_1/anta_catalog.yml
-
 ########################################################
 # Site 2
 ########################################################
@@ -62,10 +58,6 @@ cvp-site-2: ## Deploy Configs via CloudVision Static Configuration Studio
 validate-site-2: ## Validate network state
 	ansible-playbook playbooks/validate.yml -i sites/site_2/inventory.yml -e "target_hosts=SITE2_FABRIC"
 
-.PHONY: run-nrfu-site-2
-run-nrfu-site-1: ## Validate network state using anta cli
-	anta nrfu -i sites/site_2/anta_inventory.yml -c sites/site_2/anta_catalog.yml
-
 ########################################################
 # WAN & Hosts - Lab Prep
 ########################################################
@@ -73,3 +65,11 @@ run-nrfu-site-1: ## Validate network state using anta cli
 .PHONY: preplab
 preplab: ## Deploy Configs via eAPI
 	ansible-playbook playbooks/preplab.yml -i extra_configs/inventory.yml -e "target_hosts=LAB"
+
+########################################################
+# ANTA CLI tests
+########################################################
+
+.PHONY: run-anta-nrfu
+run-anta-nrfu: ## Validate network state using anta cli
+	anta nrfu -i sites/anta_inventory.yml -c sites/anta_catalog.yml
