@@ -45,10 +45,10 @@ ntp:
   servers:
     - name: 85.195.227.68
       iburst: true
-      local_interface: Management1
+      vrf: mgmt
     - name: 130.60.204.10
       iburst: true
-      local_interface: Management1
+      vrf: mgmt
 
 # Domain/DNS
 ip_name_servers:
