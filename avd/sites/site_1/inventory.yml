@@ -1,9 +1,6 @@
 ---
 SITE1:
   children:
-    CVP:
-      hosts:
-        cvp:
     SITE1_FABRIC:
       children:
         SITE1_SPINES:
