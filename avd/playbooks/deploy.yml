@@ -2,6 +2,7 @@
 - name: Deploy Switch configuration
   hosts: "{{ target_hosts }}"
   gather_facts: false
+  diff: true
 
   tasks:
 
