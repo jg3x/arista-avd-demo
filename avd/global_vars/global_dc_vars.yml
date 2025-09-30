@@ -1,7 +1,7 @@
 ---
 # Credentials for CVP (legacy arista.avd.eos_config_deploy_cvp role) and EOS Switches
 ansible_user: admin
-ansible_password: "{{ lookup('env', 'LABPASSPHRASE') }}"
+ansible_password: "{{ lookup('ansible.builtin.env', 'LABPASSPHRASE', default='admin') }}"
 ansible_network_os: arista.eos.eos
 # Configure privilege escalation
 ansible_become: true
