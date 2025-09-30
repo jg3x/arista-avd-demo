@@ -8,7 +8,12 @@ topology:
       image: ceos:4.34.2F
       env:
         CLAB_MGMT_VRF: mgmt
+        CVADDR: apiserver.cv-staging.corp.arista.io:443
       startup-config: config/eos/default_startup.cfg
+      binds:
+        - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
+        - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
     linux:
         image: avd/alpine:3.19.7
   groups:
