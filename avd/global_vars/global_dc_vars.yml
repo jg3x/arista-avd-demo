@@ -86,6 +86,7 @@ p2p_uplinks_mtu: 1500
 # Set IPv4 Underlay Routing and EVPN Overlay Routing to use eBGP
 underlay_routing_protocol: ebgp
 overlay_routing_protocol: ebgp
+underlay_rfc5549: true
 
 # Configure password authentication for BGP peerings
 # bgp_peer_groups:
