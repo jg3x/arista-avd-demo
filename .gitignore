@@ -218,3 +218,6 @@ clab-*
 avd/sites/*/documentation/*
 avd/sites/*/intended/*
 avd/sites/*/config_backup/*
+
+# Ansible collections
+python/ansible/collections/ansible_*

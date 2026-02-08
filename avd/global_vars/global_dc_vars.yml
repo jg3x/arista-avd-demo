@@ -43,10 +43,10 @@ mgmt_interface_vrf: mgmt
 # NTP Servers IP or DNS name, first NTP server will be preferred, and sourced from Management VRF
 ntp:
   servers:
-    - name: 85.195.227.68
+    - name: time1.google.com
       iburst: true
       vrf: mgmt
-    - name: 130.60.204.10
+    - name: time2.google.com
       iburst: true
       vrf: mgmt
 
@@ -55,9 +55,6 @@ ip_name_servers:
   - ip_address: 8.8.8.8
     vrf: mgmt
     priority: 0
-  - ip_address: 8.8.4.4
-    vrf: mgmt
-    priority: 1
 # dns_domain: avd.lab
 
 # TerminAttr
@@ -66,7 +63,7 @@ daemon_terminattr:
   # TCP 9910 is used on on-prem
   # TCP 443 is used on CV as a Service
   cvaddrs: # For single cluster
-    - apiserver.cv-staging.corp.arista.io:443
+    - "{{ lookup('ansible.builtin.env', 'CV_TATTR_ADDR') }}"
   # Authentication scheme used to connect to CloudVision
   cvauth:
     method: token-secure

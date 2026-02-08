@@ -1,6 +1,6 @@
 ---
 - name: Deploy to CloudVision
-  hosts: "{{ target_hosts }}"
+  hosts: all
   connection: local
   gather_facts: false
 

@@ -1,0 +1,34 @@
+---
+ip_routing: true
+ip_virtual_router_mac_address: 00:1c:73:99:99:99
+
+custom_structured_configuration_static_routes:
+  - vrf: default
+    destination_address_prefix: 0.0.0.0/0
+    gateway: '10.21.21.1'
+
+
+loopback_interfaces:
+  - name: Loopback1
+    description: WiFi VTEP IP
+    shutdown: false
+    ip_address: 10.255.255.1/32
+
+vxlan_interface:
+  vxlan1:
+    description: WiFi VXLAN Gateway
+    vxlan:
+      source_interface: Loopback1
+      udp_port: 4789
+      virtual_router_encapsulation_mac_address: mlag-system-id
+      flood_vtep_learned_data_plane: true
+      vtep_to_vtep_bridging: true
+      vlans:
+        - id: 100
+          vni: 20100
+        - id: 101
+          vni: 20101
+        - id: 102
+          vni: 20102
+        - id: 103
+          vni: 20103

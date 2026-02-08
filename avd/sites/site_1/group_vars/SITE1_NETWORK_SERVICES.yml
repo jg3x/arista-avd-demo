@@ -5,12 +5,46 @@ tenants:
     vrfs:
       - name: PROD
         vrf_vni: 10
+        static_routes:
+          - destination_address_prefix: 10.255.255.1/32
+            gateway: '10.21.21.2'
+            name: WIFI-GW-ANYCAST-VTEP-IP
+            nodes:
+              - s1-brdr1
+              - s1-brdr2
         svis:
           - id: 10
-            name: 'Ten'
+            name: 'WIFI-AP-MGMT'
+            tags: ["Infra"]
             enabled: true
             ip_address_virtual: 10.10.10.1/24
           - id: 20
-            name: 'Twenty'
+            name: 'IoT'
+            tags: ["Infra"]
             enabled: true
             ip_address_virtual: 10.20.20.1/24
+          - id: 21
+            name: 'WIFI-GW-Transit'
+            enabled: true
+            tags: ["WIFI-GW-Transit"]
+            ip_address_virtual: 10.21.21.1/24
+          - id: 100
+            name: S1-WIFI-USER-1
+            tags: ["S1-WIFI-USER"]
+            enabled: true
+            ip_address_virtual: 10.100.0.1/22
+          - id: 101
+            name: S1-WIFI-USER-2
+            tags: ["S1-WIFI-USER"]
+            enabled: true
+            ip_address_virtual: 10.100.4.1/22
+          - id: 102
+            name: S1-WIFI-USER-3
+            tags: ["S1-WIFI-USER"]
+            enabled: true
+            ip_address_virtual: 10.100.8.1/22
+          - id: 103
+            name: S1-WIFI-USER-4
+            tags: ["S1-WIFI-USER"]
+            enabled: true
+            ip_address_virtual: 10.100.12.1/22

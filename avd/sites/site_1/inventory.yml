@@ -4,10 +4,14 @@ SITE1:
     SITE1_FABRIC:
       children:
         SITE1_SPINES:
+          vars:
+            type: spine
           hosts:
             s1-spine1:
             s1-spine2:
         SITE1_LEAFS:
+          vars:
+            type: l3leaf
           hosts:
             s1-leaf1:
             s1-leaf2:
@@ -15,10 +19,17 @@ SITE1:
             s1-leaf4:
             s1-brdr1:
             s1-brdr2:
+        SITE1_WIFI_GW:
+          vars:
+            type: l2leaf
+          hosts:
+            s1-wifi-gw1:
+            s1-wifi-gw2:
     SITE1_NETWORK_SERVICES:
       children:
         SITE1_SPINES:
         SITE1_LEAFS:
+        SITE1_WIFI_GW:
     SITE1_CONNECTED_ENDPOINTS:
       children:
         SITE1_SPINES:

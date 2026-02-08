@@ -1,6 +1,6 @@
 ---
 - name: Deploy Switch configuration
-  hosts: "{{ target_hosts }}"
+  hosts: all
   gather_facts: false
   diff: true
 

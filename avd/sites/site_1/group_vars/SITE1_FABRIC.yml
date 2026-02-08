@@ -38,6 +38,8 @@ l3leaf:
   node_groups:
     - group: S1_RACK1
       bgp_as: 65101
+      filter:
+        tags: [ Infra ]
       nodes:
         - name: s1-leaf1
           id: 1
@@ -49,6 +51,8 @@ l3leaf:
           uplink_switch_interfaces: [ Ethernet2/1, Ethernet2/1 ]
     - group: S1_RACK2
       bgp_as: 65102
+      filter:
+        tags: [ Infra ]
       nodes:
         - name: s1-leaf3
           id: 3
@@ -60,6 +64,8 @@ l3leaf:
           uplink_switch_interfaces: [ Ethernet4/1, Ethernet4/1 ]
     - group: S1_BRDR
       bgp_as: 65103
+      filter:
+        tags: [ all ]
       evpn_gateway:
         evpn_l2:
           enabled: true
@@ -85,6 +91,33 @@ l3leaf:
               - hostname: s2-brdr2
                 bgp_as: 65203
                 ip_address: 10.250.2.8
+
+l2leaf:
+  defaults:
+    platform: 7050SX3 
+    spanning_tree_priority: 32768
+    spanning_tree_mode: mstp
+    mlag_interfaces: [ Ethernet49/1, Ethernet50/1 ]
+    mlag_peer_ipv4_pool: 10.251.1.0/24
+    mlag_peer_l3_ipv4_pool: 10.252.1.0/24
+    virtual_router_mac_address: 00:1c:73:00:00:99
+  node_groups:
+    - group: S1_WIFI_GW
+      filter:
+        tags: [ "WIFI-GW-Transit", "S1-WIFI-USER" ]
+      nodes:
+        - name: s1-wifi-gw1
+          id: 1
+          mgmt_ip: 192.168.0.102/24
+          uplink_switches: [ s1-brdr1, s1-brdr2 ]
+          uplink_interfaces: [ Ethernet1, Ethernet2 ]
+          uplink_switch_interfaces: [ Ethernet1, Ethernet1 ]
+        - name: s1-wifi-gw2
+          id: 2
+          mgmt_ip: 192.168.0.103/24
+          uplink_switches: [ s1-brdr1, s1-brdr2 ]
+          uplink_interfaces: [ Ethernet1, Ethernet2 ]
+          uplink_switch_interfaces: [ Ethernet2, Ethernet2 ]
 
 generate_cv_tags:
   device_tags:

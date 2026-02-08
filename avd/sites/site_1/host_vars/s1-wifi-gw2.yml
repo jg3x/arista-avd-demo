@@ -1,0 +1,6 @@
+custom_structured_configuration_vlan_interfaces:
+  - name: Vlan21
+    description: WIFI-GW-Transit
+    ip_address: 10.21.21.6/24
+    ip_virtual_router_addresses:
+      - 10.21.21.2/24
