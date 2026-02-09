@@ -100,7 +100,6 @@ l2leaf:
     mlag_interfaces: [ Ethernet49/1, Ethernet50/1 ]
     mlag_peer_ipv4_pool: 10.251.1.0/24
     mlag_peer_l3_ipv4_pool: 10.252.1.0/24
-    virtual_router_mac_address: 00:1c:73:00:00:99
   node_groups:
     - group: S1_WIFI_GW
       filter:
