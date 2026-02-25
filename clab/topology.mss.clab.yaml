@@ -1,0 +1,132 @@
+name: mss-demo
+prefix: ""
+mgmt:
+  ipv4-subnet: 192.168.0.0/24
+topology:
+  kinds:
+    arista_ceos:
+      image: ceos:latest
+      env:
+        CLAB_MGMT_VRF: mgmt
+        CVADDR: ${CV_TATTR_ADDR:=none}
+      startup-config: config/eos/default_startup.cfg
+    linux:
+        image: avd/alpine:3.19.7
+  groups:
+    spine:
+      kind: arista_ceos
+      binds:
+        - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
+        - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
+        - config/eos/EosIntfMapping/DCS-7050CX3-32S.json:/mnt/flash/EosIntfMapping.json:ro
+    leaf:
+      kind: arista_ceos
+      binds:
+        - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
+        - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
+        - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
+    border:
+      kind: arista_ceos
+      binds:
+        - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
+        - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
+        - config/eos/EosIntfMapping/DCS-7280SR3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
+    server:
+      kind: linux
+      binds:
+        - config/linux/networking-bond.sh:/root/networking.sh:ro
+        - config/linux/etc_hosts.txt:/etc/hosts:ro
+      exec:
+        - bash /root/networking.sh
+  nodes:
+  # site 1
+    s1-spine1:
+      group: spine
+      mgmt-ipv4: 192.168.0.10
+    s1-spine2:
+      group: spine
+      mgmt-ipv4: 192.168.0.11
+    s1-leaf1:
+      group: leaf
+      mgmt-ipv4: 192.168.0.12
+    s1-leaf2:
+      group: leaf
+      mgmt-ipv4: 192.168.0.13
+    s1-leaf3:
+      group: leaf
+      mgmt-ipv4: 192.168.0.14
+    s1-leaf4:
+      group: leaf
+      mgmt-ipv4: 192.168.0.15
+    s1-brdr1:
+      group: border
+      mgmt-ipv4: 192.168.0.100
+    s1-brdr2:
+      group: border
+      mgmt-ipv4: 192.168.0.101
+    s1-wifi-gw1:
+      group: leaf
+      mgmt-ipv4: 192.168.0.102
+    s1-wifi-gw2:
+      group: leaf
+      mgmt-ipv4: 192.168.0.103
+    s1-host1:
+      group: server
+      binds:
+        - config/linux/s1-host1-vxlan.sh:/root/vxlan.sh:ro
+    s1-host2:
+      group: server
+      binds:
+        - config/linux/s1-host2-vxlan.sh:/root/vxlan.sh:ro
+    s1-host3:
+      group: server
+    s1-host4:
+      group: server
+      binds:
+        - config/linux/networking-bridge.sh:/root/networking.sh:ro
+  links:
+  # site 1
+  ## mlag links
+  - endpoints: ["s1-leaf1:eth49", "s1-leaf2:eth49"]
+  - endpoints: ["s1-leaf1:eth50", "s1-leaf2:eth50"]
+  - endpoints: ["s1-leaf3:eth49", "s1-leaf4:eth49"]
+  - endpoints: ["s1-leaf3:eth50", "s1-leaf4:eth50"]
+  - endpoints: ["s1-brdr1:eth49", "s1-brdr2:eth49"]
+  - endpoints: ["s1-brdr1:eth50", "s1-brdr2:eth50"]
+  - endpoints: ["s1-wifi-gw1:eth49", "s1-wifi-gw2:eth49"]
+  - endpoints: ["s1-wifi-gw1:eth50", "s1-wifi-gw2:eth50"]
+  ## fabric links
+  - endpoints: ["s1-spine1:eth1", "s1-leaf1:eth51"]
+  - endpoints: ["s1-spine1:eth2", "s1-leaf2:eth51"]
+  - endpoints: ["s1-spine1:eth3", "s1-leaf3:eth51"]
+  - endpoints: ["s1-spine1:eth4", "s1-leaf4:eth51"]
+  - endpoints: ["s1-spine1:eth31", "s1-brdr1:eth51"]
+  - endpoints: ["s1-spine1:eth32", "s1-brdr2:eth51"]
+
+  - endpoints: ["s1-spine2:eth1", "s1-leaf1:eth52"]
+  - endpoints: ["s1-spine2:eth2", "s1-leaf2:eth52"]
+  - endpoints: ["s1-spine2:eth3", "s1-leaf3:eth52"]
+  - endpoints: ["s1-spine2:eth4", "s1-leaf4:eth52"]
+  - endpoints: ["s1-spine2:eth31", "s1-brdr1:eth52"]
+  - endpoints: ["s1-spine2:eth32", "s1-brdr2:eth52"]
+  ## server links
+  - endpoints: ["s1-leaf1:eth1", "s1-host1:eth1"]
+  - endpoints: ["s1-leaf2:eth1", "s1-host1:eth2"]
+  - endpoints: ["s1-leaf1:eth2", "s1-host3:eth1"]
+  - endpoints: ["s1-leaf2:eth2", "s1-host3:eth2"]
+  - endpoints: ["s1-leaf3:eth1", "s1-host2:eth1"]
+  - endpoints: ["s1-leaf4:eth1", "s1-host2:eth2"]
+  - endpoints: ["s1-leaf3:eth2", "s1-host4:eth1"]
+  - endpoints: ["s1-leaf4:eth2", "s1-host4:eth2"]
+  ## WiFi gateway links
+  - endpoints: ["s1-brdr1:eth1", "s1-wifi-gw1:eth1"]
+  - endpoints: ["s1-brdr1:eth2", "s1-wifi-gw2:eth1"]
+  - endpoints: ["s1-brdr2:eth1", "s1-wifi-gw1:eth2"]
+  - endpoints: ["s1-brdr2:eth2", "s1-wifi-gw2:eth2"]
+
+
+
+
