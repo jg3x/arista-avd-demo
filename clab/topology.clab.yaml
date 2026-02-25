@@ -37,7 +37,7 @@ topology:
     server:
       kind: linux
       binds:
-        - config/linux/networking.sh:/root/networking.sh:ro
+        - config/linux/networking-bond.sh:/root/networking.sh:ro
         - config/linux/etc_hosts.txt:/etc/hosts:ro
       exec:
         - bash /root/networking.sh
@@ -81,6 +81,12 @@ topology:
       group: server
       binds:
         - config/linux/s1-host2-vxlan.sh:/root/vxlan.sh:ro
+    s1-host3:
+      group: server
+    s1-host4:
+      group: server
+      binds:
+        - config/linux/networking-bridge.sh:/root/networking.sh:ro
   # site 2
     s2-spine1:
       group: spine
@@ -138,8 +144,12 @@ topology:
   ## server links
   - endpoints: ["s1-leaf1:eth1", "s1-host1:eth1"]
   - endpoints: ["s1-leaf2:eth1", "s1-host1:eth2"]
+  - endpoints: ["s1-leaf1:eth2", "s1-host3:eth1"]
+  - endpoints: ["s1-leaf2:eth2", "s1-host3:eth2"]
   - endpoints: ["s1-leaf3:eth1", "s1-host2:eth1"]
   - endpoints: ["s1-leaf4:eth1", "s1-host2:eth2"]
+  - endpoints: ["s1-leaf3:eth2", "s1-host4:eth1"]
+  - endpoints: ["s1-leaf4:eth2", "s1-host4:eth2"]
   ## WiFi gateway links
   - endpoints: ["s1-brdr1:eth1", "s1-wifi-gw1:eth1"]
   - endpoints: ["s1-brdr1:eth2", "s1-wifi-gw2:eth1"]
