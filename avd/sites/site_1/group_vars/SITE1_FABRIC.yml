@@ -22,7 +22,7 @@ spine:
 # Leaf Switches
 l3leaf:
   defaults:
-    platform: cEOS 
+    platform: cEOS
     spanning_tree_priority: 4096 
     spanning_tree_mode: mstp
     loopback_ipv4_pool: 10.250.1.0/24
@@ -38,6 +38,7 @@ l3leaf:
   node_groups:
     - group: S1_RACK1
       bgp_as: 65101
+      platform: 7050SX3
       filter:
         tags: [ Infra ]
       nodes:
@@ -51,6 +52,7 @@ l3leaf:
           uplink_switch_interfaces: [ Ethernet2/1, Ethernet2/1 ]
     - group: S1_RACK2
       bgp_as: 65102
+      platform: 7050SX3
       filter:
         tags: [ Infra ]
       nodes:
