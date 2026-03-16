@@ -217,7 +217,7 @@ clab-*
 
 # AVD artifacts
 avd/sites/*/documentation/*
-avd/sites/*/intended/*
+# avd/sites/*/intended/*
 avd/sites/*/config_backup/*
 
 # Ansible collections
