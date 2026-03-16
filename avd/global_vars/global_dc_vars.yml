@@ -121,4 +121,17 @@ l3_edge:
 generate_cv_tags:
   topology_hints: true
 
+network_ports:
+# Shut down unused ports based on the switch name (regex) and the target platform. 
+# If the network_ports model is used to configure downlink ports, this must be the first entry in the list. 
+# If downlinks are defined in connected_endpoints data mode, the connected_endpoints configuration takes precedence.
+  - switches:
+      - .*-leaf.*
+    platforms:
+      - 7050SX3
+    switch_ports:
+      - Ethernet1-48
+    enabled: false
+    description: UNUSED
+
 
