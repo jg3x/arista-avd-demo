@@ -4,10 +4,14 @@ SITE2:
     SITE2_FABRIC:
       children:
         SITE2_SPINES:
+          vars:
+            type: spine
           hosts:
             s2-spine1:
             s2-spine2:
         SITE2_LEAFS:
+          vars:
+            type: l3leaf
           hosts:
             s2-leaf1:
             s2-leaf2:
