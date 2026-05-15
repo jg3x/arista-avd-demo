@@ -537,7 +537,8 @@ vxlan_interface:
   vxlan1:
     description: s1-brdr1_VTEP
     vxlan:
-      source_interface: Loopback1
+      source_interface: Loopback0
+      mlag_source_interface: Loopback1
       udp_port: 4789
       virtual_router_encapsulation_mac_address: mlag-system-id
       vlans:
