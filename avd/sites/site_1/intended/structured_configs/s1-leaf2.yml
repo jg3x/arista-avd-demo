@@ -62,6 +62,282 @@ ethernet_interfaces:
   peer_interface: eth2
   peer_type: server
   port_profile: PP-VLAN10
+- name: Ethernet3
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet4
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet5
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet6
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet7
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet8
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet9
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet10
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet11
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet12
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet13
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet14
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet15
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet16
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet17
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet18
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet19
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet20
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet21
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet22
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet23
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet24
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet25
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet26
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet27
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet28
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet29
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet30
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet31
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet32
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet33
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet34
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet35
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet36
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet37
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet38
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet39
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet40
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet41
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet42
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet43
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet44
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet45
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet46
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet47
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet48
+  description: UNUSED
+  shutdown: true
+  peer_type: network_port
+  switchport:
+    enabled: true
 hostname: s1-leaf2
 ip_igmp_snooping:
   globally_enabled: true
@@ -72,8 +348,8 @@ local_users:
   privilege: 15
   role: network-admin
   sha512_password: $6$arista$zo8APuuc.j2mn1Ic7FNXCUzUugtzyuFikDc5Q.Qi1RDei.U6dfH/MtlaKZJGmm6fKjD4GyYgQvVfCfYEqG1PT1
-  ssh_key: ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBE5gZiH2WldfzGqDbZehL3Q7qTeQ9gWVqKrFxPsaHQaAuxqQiwc27EE1rrkqOmlaOf2ohvG/YrSJ6xESQqRPm4E=
-    avd@784f9cbb6eff
+  ssh_key: ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMCmS97azz8eWu9IEslcHUWxgYKtgMmHeZEojASt/WR2WgZwWgDsoxDsVWYfnafwfraCC/Imm2zZjPzg1dXaJ3o=
+    avd@d707dd391041
 loopback_interfaces:
 - name: Loopback0
   description: ROUTER_ID

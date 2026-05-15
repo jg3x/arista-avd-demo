@@ -71,8 +71,8 @@ local_users:
   privilege: 15
   role: network-admin
   sha512_password: $6$arista$zo8APuuc.j2mn1Ic7FNXCUzUugtzyuFikDc5Q.Qi1RDei.U6dfH/MtlaKZJGmm6fKjD4GyYgQvVfCfYEqG1PT1
-  ssh_key: ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBE5gZiH2WldfzGqDbZehL3Q7qTeQ9gWVqKrFxPsaHQaAuxqQiwc27EE1rrkqOmlaOf2ohvG/YrSJ6xESQqRPm4E=
-    avd@784f9cbb6eff
+  ssh_key: ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMCmS97azz8eWu9IEslcHUWxgYKtgMmHeZEojASt/WR2WgZwWgDsoxDsVWYfnafwfraCC/Imm2zZjPzg1dXaJ3o=
+    avd@d707dd391041
 loopback_interfaces:
 - name: Loopback0
   description: ROUTER_ID
