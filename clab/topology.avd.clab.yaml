@@ -5,7 +5,7 @@ mgmt:
 topology:
   kinds:
     arista_ceos:
-      image: ceos:4.35.1F
+      image: ceos:4.35.2F
       env:
         CLAB_MGMT_VRF: mgmt
         CVADDR: ${CV_TATTR_ADDR:=none}
@@ -15,6 +15,7 @@ topology:
   groups:
     spine:
       kind: arista_ceos
+      image: ceos:4.29.8M
       binds:
         - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
         - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
@@ -22,6 +23,7 @@ topology:
         - config/eos/EosIntfMapping/DCS-7050CX3-32S.json:/mnt/flash/EosIntfMapping.json:ro
     leaf:
       kind: arista_ceos
+      image: ceos:4.36.0.1F
       binds:
         - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
         - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
