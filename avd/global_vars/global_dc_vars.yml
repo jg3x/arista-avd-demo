@@ -134,4 +134,8 @@ network_ports:
     enabled: false
     description: UNUSED
 
+load_interval:
+  # Default load interval in seconds.
+  default: 1
+
 
