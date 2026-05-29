@@ -9,16 +9,16 @@ anta_inventory:
     tags: ['fabric', 'spine']
   - host: 192.168.0.12
     name: s1-leaf1
-    tags: ['fabric', 'leaf', 'site1']
+    tags: ['fabric', 'leaf', 'site1', 'mlag']
   - host: 192.168.0.13
     name: s1-leaf2
-    tags: ['fabric', 'leaf', 'site1']
+    tags: ['fabric', 'leaf', 'site1', 'mlag']
   - host: 192.168.0.14
     name: s1-leaf3
-    tags: ['fabric', 'leaf', 'site1']
+    tags: ['fabric', 'leaf', 'site1', 'mlag']
   - host: 192.168.0.15
     name: s1-leaf4
-    tags: ['fabric', 'leaf', 'site1']
+    tags: ['fabric', 'leaf', 'site1', 'mlag']
   - host: 192.168.0.100
     name: s1-brdr1
     tags: ['fabric', 'leaf']
