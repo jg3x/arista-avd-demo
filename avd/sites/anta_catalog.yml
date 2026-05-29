@@ -19,6 +19,7 @@ anta.tests.software:
 anta.tests.system:
   - VerifyUptime: # Verifies the device uptime is higher than a value.
       minimum: 1
+  - VerifyNTP:
 
 anta.tests.routing:
   generic:
@@ -44,4 +45,14 @@ anta.tests.mlag:
   - VerifyMlagInterfaces:
       filters:
           tags: ['mlag']
+
+anta.tests.connectivity:
+  - VerifyReachability:
+      hosts:
+        - source: Management1
+          destination: 8.8.8.8
+          vrf: mgmt
+          df_bit: True
+          size: 100
+          reachable: true
 
