@@ -4,10 +4,12 @@ port_profiles:
   - profile: PP-VLAN10
     mode: "access"
     vlans: "10"
+    mtu: 9000
     spanning_tree_portfast: edge
   - profile: PP-VLAN20
     mode: "access"
     vlans: "20"
+    mtu: 9000
     spanning_tree_portfast: edge
 
 ###########################################################
