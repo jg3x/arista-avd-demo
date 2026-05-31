@@ -43,6 +43,8 @@ ethernet_interfaces:
 hostname: s1-wifi-gw1
 ip_igmp_snooping:
   globally_enabled: true
+load_interval:
+  default: 1
 local_users:
 - name: admin
   privilege: 15
@@ -65,11 +67,12 @@ management_interfaces:
 metadata:
   is_deployed: true
   platform: 7050SX3
+  dc_name: SITE1
   fabric_name: SITE1_FABRIC
   cv_tags:
     device_tags:
     - name: DC
-      value: AVD-DEMO-SITE1
+      value: SITE1
 mlag_configuration:
   domain_id: S1_WIFI_GW
   local_interface: Vlan4094
@@ -116,7 +119,7 @@ vlan_interfaces:
   description: MLAG
   shutdown: false
   ip_address: 10.251.1.0/31
-  mtu: 1500
+  mtu: 9200
   no_autostate: true
 - name: Vlan21
   description: WIFI-GW-Transit

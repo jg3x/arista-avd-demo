@@ -7,7 +7,7 @@ ethernet_interfaces:
 - name: Ethernet1/1
   description: P2P_s2-leaf1_Ethernet51/1
   shutdown: false
-  mtu: 1500
+  mtu: 9200
   ip_address: 172.16.2.0/31
   peer: s2-leaf1
   peer_interface: Ethernet51/1
@@ -17,7 +17,7 @@ ethernet_interfaces:
 - name: Ethernet2/1
   description: P2P_s2-leaf2_Ethernet51/1
   shutdown: false
-  mtu: 1500
+  mtu: 9200
   ip_address: 172.16.2.4/31
   peer: s2-leaf2
   peer_interface: Ethernet51/1
@@ -27,7 +27,7 @@ ethernet_interfaces:
 - name: Ethernet3/1
   description: P2P_s2-leaf3_Ethernet51/1
   shutdown: false
-  mtu: 1500
+  mtu: 9200
   ip_address: 172.16.2.8/31
   peer: s2-leaf3
   peer_interface: Ethernet51/1
@@ -37,7 +37,7 @@ ethernet_interfaces:
 - name: Ethernet4/1
   description: P2P_s2-leaf4_Ethernet51/1
   shutdown: false
-  mtu: 1500
+  mtu: 9200
   ip_address: 172.16.2.12/31
   peer: s2-leaf4
   peer_interface: Ethernet51/1
@@ -47,7 +47,7 @@ ethernet_interfaces:
 - name: Ethernet31/1
   description: P2P_s2-brdr1_Ethernet51/1
   shutdown: false
-  mtu: 1500
+  mtu: 9200
   ip_address: 172.16.2.16/31
   peer: s2-brdr1
   peer_interface: Ethernet51/1
@@ -57,7 +57,7 @@ ethernet_interfaces:
 - name: Ethernet32/1
   description: P2P_s2-brdr2_Ethernet51/1
   shutdown: false
-  mtu: 1500
+  mtu: 9200
   ip_address: 172.16.2.20/31
   peer: s2-brdr2
   peer_interface: Ethernet51/1
@@ -66,6 +66,8 @@ ethernet_interfaces:
     enabled: false
 hostname: s2-spine1
 ip_routing: true
+load_interval:
+  default: 1
 local_users:
 - name: admin
   privilege: 15

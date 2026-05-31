@@ -25,7 +25,7 @@ ethernet_interfaces:
 - name: Ethernet51/1
   description: P2P_s2-spine1_Ethernet2/1
   shutdown: false
-  mtu: 1500
+  mtu: 9200
   ip_address: 172.16.2.5/31
   peer: s2-spine1
   peer_interface: Ethernet2/1
@@ -35,7 +35,7 @@ ethernet_interfaces:
 - name: Ethernet52/1
   description: P2P_s2-spine2_Ethernet2/1
   shutdown: false
-  mtu: 1500
+  mtu: 9200
   ip_address: 172.16.2.7/31
   peer: s2-spine2
   peer_interface: Ethernet2/1
@@ -339,6 +339,8 @@ ip_igmp_snooping:
   globally_enabled: true
 ip_routing: true
 ip_virtual_router_mac_address: 00:1c:73:00:00:99
+load_interval:
+  default: 1
 local_users:
 - name: admin
   privilege: 15
@@ -395,6 +397,7 @@ port_channel_interfaces:
 - name: Port-Channel1
   description: SERVER_s2-host1
   shutdown: false
+  mtu: 9000
   mlag: 1
   spanning_tree_portfast: edge
   switchport:
@@ -568,12 +571,12 @@ vlan_interfaces:
   description: MLAG_L3
   shutdown: false
   ip_address: 10.252.2.1/31
-  mtu: 1500
+  mtu: 9200
 - name: Vlan4094
   description: MLAG
   shutdown: false
   ip_address: 10.251.2.1/31
-  mtu: 1500
+  mtu: 9200
   no_autostate: true
 - name: Vlan10
   description: Ten
@@ -592,7 +595,7 @@ vlan_interfaces:
   shutdown: false
   vrf: PROD
   ip_address: 10.252.2.1/31
-  mtu: 1500
+  mtu: 9200
   tenant: S2_FABRIC
   type: underlay_peering
 vlan_internal_order:

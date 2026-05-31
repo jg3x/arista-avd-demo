@@ -25,7 +25,7 @@ ethernet_interfaces:
 - name: Ethernet51/1
   description: P2P_s1-spine1_Ethernet3/1
   shutdown: false
-  mtu: 1500
+  mtu: 9200
   ip_address: 172.16.1.9/31
   peer: s1-spine1
   peer_interface: Ethernet3/1
@@ -35,7 +35,7 @@ ethernet_interfaces:
 - name: Ethernet52/1
   description: P2P_s1-spine2_Ethernet3/1
   shutdown: false
-  mtu: 1500
+  mtu: 9200
   ip_address: 172.16.1.11/31
   peer: s1-spine2
   peer_interface: Ethernet3/1
@@ -55,6 +55,7 @@ ethernet_interfaces:
 - name: Ethernet2
   description: SERVER_s1-host4_eth1
   shutdown: false
+  mtu: 9000
   peer: s1-host4
   peer_interface: eth1
   peer_type: server
@@ -345,6 +346,8 @@ ip_igmp_snooping:
   globally_enabled: true
 ip_routing: true
 ip_virtual_router_mac_address: 00:1c:73:00:00:99
+load_interval:
+  default: 1
 local_users:
 - name: admin
   privilege: 15
@@ -376,11 +379,13 @@ management_interfaces:
 metadata:
   is_deployed: true
   platform: 7050SX3
+  pod_name: S1-POD01
+  dc_name: SITE1
   fabric_name: SITE1_FABRIC
   cv_tags:
     device_tags:
     - name: DC
-      value: AVD-DEMO-SITE1
+      value: SITE1
 mlag_configuration:
   domain_id: S1_RACK2
   local_interface: Vlan4094
@@ -401,6 +406,7 @@ port_channel_interfaces:
 - name: Port-Channel1
   description: SERVER_s1-host2
   shutdown: false
+  mtu: 9000
   mlag: 1
   spanning_tree_portfast: edge
   switchport:
@@ -574,12 +580,12 @@ vlan_interfaces:
   description: MLAG_L3
   shutdown: false
   ip_address: 10.252.1.4/31
-  mtu: 1500
+  mtu: 9200
 - name: Vlan4094
   description: MLAG
   shutdown: false
   ip_address: 10.251.1.4/31
-  mtu: 1500
+  mtu: 9200
   no_autostate: true
 - name: Vlan10
   description: WIFI-AP-MGMT
@@ -602,7 +608,7 @@ vlan_interfaces:
   shutdown: false
   vrf: PROD
   ip_address: 10.252.1.4/31
-  mtu: 1500
+  mtu: 9200
   tenant: S1_FABRIC
   type: underlay_peering
 vlan_internal_order:
