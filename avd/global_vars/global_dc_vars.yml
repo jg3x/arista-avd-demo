@@ -138,4 +138,54 @@ load_interval:
   # Default load interval in seconds.
   default: 1
 
+# Flow-tracking configuration
+# Default enabling of flow-tracking(IPFIX) for various interface types across the fabric.
+# Flow Tracking can also be enabled/disabled under each of the specific data models.
+# For general flow-tracking settings see `flow_tracking_settings`.
+fabric_flow_tracking:
+  # Enable flow-tracking on all fabric uplinks.
+  uplinks:
+    enabled: true
 
+  # Enable flow-tracking on all fabric downlinks.
+  downlinks:
+    enabled: true
+
+  # Enable flow-tracking on all endpoints ports.
+  endpoints:
+    enabled: true
+
+  # Enable flow-tracking on all p2p_links defined under l3_edge.
+  l3_edge:
+    enabled: true
+
+  # Enable flow-tracking on all MLAG peer interfaces.
+  mlag_interfaces:
+    enabled: true
+
+  # Enable flow-tracking on all node.l3_interfaces and network-services tenants.vrfs.l3_interfaces.
+  l3_interfaces:
+    enabled: true
+
+  # Enable flow-tracking on all node.l3_port_channels.
+  l3_port_channels:
+    enabled: true
+
+flow_tracking_settings:
+  # The options relevant only for flow tracker type sampled.
+  sampled:
+    encapsulation:
+      ipv4_ipv6: true
+      mpls: false
+    sample: 5000
+  trackers:
+  - exporters:
+    - collectors:
+      - host: 127.0.0.1
+      local_interface: Loopback0
+      name: CV-TELEMETRY
+      template_interval: 3600000
+    name: FLOW-TRACKER
+    record_export:
+      on_inactive_timeout: 70000
+      on_interval: 30000 # export records every 30,000ms (30s)
