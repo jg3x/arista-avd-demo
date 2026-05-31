@@ -17,6 +17,8 @@ ip link set dev eth2 master bond0
 
 # bond0 config
 ip link set dev bond0 master vrf_prod
+ip link set dev bond0 mtu 9000
+
 # s1 hosts
 if [ "$HOSTNAME" == "s1-host1" ]; then
 ip addr add 10.10.10.100/24 dev bond0
