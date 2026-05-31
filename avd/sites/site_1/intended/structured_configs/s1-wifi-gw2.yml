@@ -40,6 +40,24 @@ ethernet_interfaces:
   peer: s1-brdr2
   peer_interface: Ethernet2
   peer_type: l3leaf
+flow_tracking:
+  sampled:
+    encapsulation:
+      ipv4_ipv6: true
+      mpls: false
+    sample: 5000
+    trackers:
+    - record_export:
+        on_inactive_timeout: 70000
+        on_interval: 30000
+      name: FLOW-TRACKER
+      exporters:
+      - name: CV-TELEMETRY
+        collectors:
+        - host: 127.0.0.1
+        local_interface: Loopback0
+        template_interval: 3600000
+    shutdown: false
 hostname: s1-wifi-gw2
 ip_igmp_snooping:
   globally_enabled: true
@@ -93,6 +111,8 @@ port_channel_interfaces:
 - name: Port-Channel491
   description: MLAG_s1-wifi-gw1_Port-Channel491
   shutdown: false
+  flow_tracker:
+    sampled: FLOW-TRACKER
   switchport:
     enabled: true
     mode: trunk
@@ -103,6 +123,8 @@ port_channel_interfaces:
   description: L2_S1_BRDR_Port-Channel1
   shutdown: false
   mlag: 1
+  flow_tracker:
+    sampled: FLOW-TRACKER
   switchport:
     enabled: true
     mode: trunk

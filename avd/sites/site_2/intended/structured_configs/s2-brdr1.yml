@@ -26,6 +26,8 @@ ethernet_interfaces:
   description: P2P_s2-spine1_Ethernet31/1
   shutdown: false
   mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.2.17/31
   peer: s2-spine1
   peer_interface: Ethernet31/1
@@ -36,6 +38,8 @@ ethernet_interfaces:
   description: P2P_s2-spine2_Ethernet31/1
   shutdown: false
   mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.2.19/31
   peer: s2-spine2
   peer_interface: Ethernet31/1
@@ -46,12 +50,32 @@ ethernet_interfaces:
   description: P2P_s1-brdr1_Ethernet55/1
   shutdown: false
   mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.255.1/31
   peer: s1-brdr1
   peer_interface: Ethernet55/1
   peer_type: other
   switchport:
     enabled: false
+flow_tracking:
+  sampled:
+    encapsulation:
+      ipv4_ipv6: true
+      mpls: false
+    sample: 5000
+    trackers:
+    - record_export:
+        on_inactive_timeout: 70000
+        on_interval: 30000
+      name: FLOW-TRACKER
+      exporters:
+      - name: CV-TELEMETRY
+        collectors:
+        - host: 127.0.0.1
+        local_interface: Loopback0
+        template_interval: 3600000
+    shutdown: false
 hostname: s2-brdr1
 ip_igmp_snooping:
   globally_enabled: true
@@ -116,6 +140,8 @@ port_channel_interfaces:
 - name: Port-Channel491
   description: MLAG_s2-brdr2_Port-Channel491
   shutdown: false
+  flow_tracker:
+    sampled: FLOW-TRACKER
   switchport:
     enabled: true
     mode: trunk

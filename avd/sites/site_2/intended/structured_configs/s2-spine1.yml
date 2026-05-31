@@ -8,6 +8,8 @@ ethernet_interfaces:
   description: P2P_s2-leaf1_Ethernet51/1
   shutdown: false
   mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.2.0/31
   peer: s2-leaf1
   peer_interface: Ethernet51/1
@@ -18,6 +20,8 @@ ethernet_interfaces:
   description: P2P_s2-leaf2_Ethernet51/1
   shutdown: false
   mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.2.4/31
   peer: s2-leaf2
   peer_interface: Ethernet51/1
@@ -28,6 +32,8 @@ ethernet_interfaces:
   description: P2P_s2-leaf3_Ethernet51/1
   shutdown: false
   mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.2.8/31
   peer: s2-leaf3
   peer_interface: Ethernet51/1
@@ -38,6 +44,8 @@ ethernet_interfaces:
   description: P2P_s2-leaf4_Ethernet51/1
   shutdown: false
   mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.2.12/31
   peer: s2-leaf4
   peer_interface: Ethernet51/1
@@ -48,6 +56,8 @@ ethernet_interfaces:
   description: P2P_s2-brdr1_Ethernet51/1
   shutdown: false
   mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.2.16/31
   peer: s2-brdr1
   peer_interface: Ethernet51/1
@@ -58,12 +68,32 @@ ethernet_interfaces:
   description: P2P_s2-brdr2_Ethernet51/1
   shutdown: false
   mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.2.20/31
   peer: s2-brdr2
   peer_interface: Ethernet51/1
   peer_type: l3leaf
   switchport:
     enabled: false
+flow_tracking:
+  sampled:
+    encapsulation:
+      ipv4_ipv6: true
+      mpls: false
+    sample: 5000
+    trackers:
+    - record_export:
+        on_inactive_timeout: 70000
+        on_interval: 30000
+      name: FLOW-TRACKER
+      exporters:
+      - name: CV-TELEMETRY
+        collectors:
+        - host: 127.0.0.1
+        local_interface: Loopback0
+        template_interval: 3600000
+    shutdown: false
 hostname: s2-spine1
 ip_routing: true
 load_interval:

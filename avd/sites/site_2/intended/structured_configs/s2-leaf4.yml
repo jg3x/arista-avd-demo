@@ -26,6 +26,8 @@ ethernet_interfaces:
   description: P2P_s2-spine1_Ethernet4/1
   shutdown: false
   mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.2.13/31
   peer: s2-spine1
   peer_interface: Ethernet4/1
@@ -36,6 +38,8 @@ ethernet_interfaces:
   description: P2P_s2-spine2_Ethernet4/1
   shutdown: false
   mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.2.15/31
   peer: s2-spine2
   peer_interface: Ethernet4/1
@@ -55,285 +59,397 @@ ethernet_interfaces:
 - name: Ethernet2
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet3
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet4
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet5
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet6
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet7
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet8
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet9
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet10
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet11
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet12
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet13
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet14
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet15
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet16
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet17
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet18
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet19
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet20
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet21
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet22
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet23
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet24
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet25
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet26
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet27
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet28
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet29
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet30
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet31
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet32
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet33
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet34
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet35
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet36
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet37
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet38
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet39
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet40
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet41
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet42
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet43
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet44
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet45
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet46
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet47
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
 - name: Ethernet48
   description: UNUSED
   shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer_type: network_port
   switchport:
     enabled: true
+flow_tracking:
+  sampled:
+    encapsulation:
+      ipv4_ipv6: true
+      mpls: false
+    sample: 5000
+    trackers:
+    - record_export:
+        on_inactive_timeout: 70000
+        on_interval: 30000
+      name: FLOW-TRACKER
+      exporters:
+      - name: CV-TELEMETRY
+        collectors:
+        - host: 127.0.0.1
+        local_interface: Loopback0
+        template_interval: 3600000
+    shutdown: false
 hostname: s2-leaf4
 ip_igmp_snooping:
   globally_enabled: true
@@ -398,6 +514,8 @@ port_channel_interfaces:
 - name: Port-Channel491
   description: MLAG_s2-leaf3_Port-Channel491
   shutdown: false
+  flow_tracker:
+    sampled: FLOW-TRACKER
   switchport:
     enabled: true
     mode: trunk
@@ -410,6 +528,8 @@ port_channel_interfaces:
   mtu: 9000
   mlag: 1
   spanning_tree_portfast: edge
+  flow_tracker:
+    sampled: FLOW-TRACKER
   switchport:
     enabled: true
     mode: access
