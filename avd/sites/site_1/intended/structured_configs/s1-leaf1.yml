@@ -381,8 +381,16 @@ metadata:
   fabric_name: SITE1_FABRIC
   cv_tags:
     device_tags:
-    - name: DC
+    - name: topology_hint_datacenter
       value: SITE1
+    - name: topology_hint_fabric
+      value: SITE1_FABRIC
+    - name: topology_hint_pod
+      value: S1-POD01
+    - name: topology_hint_type
+      value: leaf
+    - name: topology_hint_rack
+      value: S1_RACK1
 mlag_configuration:
   domain_id: S1_RACK1
   local_interface: Vlan4094

@@ -95,11 +95,19 @@ management_interfaces:
 metadata:
   is_deployed: true
   platform: cEOS
+  pod_name: S2-POD01
+  dc_name: SITE2
   fabric_name: SITE2_FABRIC
   cv_tags:
     device_tags:
-    - name: DC
-      value: AVD-DEMO-SITE2
+    - name: topology_hint_datacenter
+      value: SITE2
+    - name: topology_hint_fabric
+      value: SITE2_FABRIC
+    - name: topology_hint_pod
+      value: S2-POD01
+    - name: topology_hint_type
+      value: spine
 prefix_lists:
 - name: PL-LOOPBACKS-EVPN-OVERLAY
   sequence_numbers:

@@ -372,11 +372,21 @@ management_interfaces:
 metadata:
   is_deployed: true
   platform: 7050SX3
+  pod_name: S2-POD01
+  dc_name: SITE2
   fabric_name: SITE2_FABRIC
   cv_tags:
     device_tags:
-    - name: DC
-      value: AVD-DEMO-SITE2
+    - name: topology_hint_datacenter
+      value: SITE2
+    - name: topology_hint_fabric
+      value: SITE2_FABRIC
+    - name: topology_hint_pod
+      value: S2-POD01
+    - name: topology_hint_type
+      value: leaf
+    - name: topology_hint_rack
+      value: S2_RACK1
 mlag_configuration:
   domain_id: S2_RACK1
   local_interface: Vlan4094
