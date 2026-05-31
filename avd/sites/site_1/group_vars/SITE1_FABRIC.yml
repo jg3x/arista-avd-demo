@@ -1,5 +1,7 @@
 ---
 fabric_name: SITE1_FABRIC
+dc_name: SITE1
+pod_name: S1-POD01
 
 # Set Design Type to L3L2 with EVPN VXLAN
 design:
@@ -119,8 +121,3 @@ l2leaf:
           uplink_switches: [ s1-brdr1, s1-brdr2 ]
           uplink_interfaces: [ Ethernet1, Ethernet2 ]
           uplink_switch_interfaces: [ Ethernet2, Ethernet2 ]
-
-generate_cv_tags:
-  device_tags:
-    - name: DC
-      value: AVD-DEMO-SITE1
