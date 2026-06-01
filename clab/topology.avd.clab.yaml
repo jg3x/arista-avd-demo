@@ -41,6 +41,7 @@ topology:
       binds:
         - config/linux/networking-bond.sh:/root/networking.sh:ro
         - config/linux/etc_hosts.txt:/etc/hosts:ro
+        - config/linux/ping.sh:/root/ping.sh:ro
       exec:
         - bash /root/networking.sh
   nodes:
