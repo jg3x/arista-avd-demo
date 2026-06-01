@@ -15,7 +15,7 @@ topology:
   groups:
     spine:
       kind: arista_ceos
-      image: ceos:4.29.8M
+      image: ceos:4.30.10M
       binds:
         - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
         - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
