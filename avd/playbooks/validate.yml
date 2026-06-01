@@ -11,4 +11,10 @@
         name: arista.avd.anta_runner
       vars:
         avd_catalogs_filters:
-          - skip_tests: [ VerifyInterfaceDiscards, VerifyLoggingErrors, VerifyMemoryUtilization, VerifyNTP, VerifyFileSystemUtilization ]
+          - skip_tests:
+            - VerifyInterfaceDiscards
+            - VerifyLoggingErrors
+            - VerifyMemoryUtilization
+            - VerifyNTP
+            - VerifyFileSystemUtilization
+            - VerifyInterfacesStatus
