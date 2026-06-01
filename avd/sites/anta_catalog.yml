@@ -8,6 +8,7 @@ anta.tests.software:
         - 4.35.1F-45319759.4351F (engineering build)
         - 4.35.2F-46221466.4352F (engineering build)
         - 4.36.0.1F-47425148.43601F (engineering build)
+        - 4.30.10M-41613166.43010M (engineering build)
   - VerifyTerminAttrVersion:
       versions:
         - v1.22.1
@@ -15,6 +16,7 @@ anta.tests.software:
         - v1.42.0
         - v1.43.0
         - v1.44.0
+        - v1.28.10
 
 anta.tests.system:
   - VerifyUptime: # Verifies the device uptime is higher than a value.
