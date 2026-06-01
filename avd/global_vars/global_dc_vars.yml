@@ -1,27 +1,4 @@
 ---
-# Credentials for CVP (legacy arista.avd.eos_config_deploy_cvp role) and EOS Switches
-ansible_user: admin
-ansible_password: "{{ lookup('ansible.builtin.env', 'LABPASSPHRASE', default='admin') }}"
-ansible_network_os: arista.eos.eos
-# Configure privilege escalation
-ansible_become: true
-ansible_become_method: enable
-# HTTPAPI configuration
-ansible_connection: httpapi
-ansible_httpapi_port: 443
-ansible_httpapi_use_ssl: true
-ansible_httpapi_validate_certs: false
-ansible_python_interpreter: $(which python3)
-avd_data_validation_mode: error
-
-# arista.avd.cv_deploy role parameters
-cv_server: "{{ lookup('env','CV_SERVER') }}"
-cv_token: "{{ lookup('env','CV_TOKEN') }}"
-cv_verify_certs: false
-
-# arista.avd.eos_config_deploy_cvp role parameters
-cv_collection: v3
-execute_tasks: true
 
 # Local Users
 local_users:
