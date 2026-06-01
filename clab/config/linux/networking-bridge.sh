@@ -3,8 +3,8 @@
 HOSTNAME=$(hostname)
 
 # create vrf
-ip link add vrf_prod type vrf table 1023
-ip link set dev vrf_prod up
+# ip link add vrf_prod type vrf table 1023
+# ip link set dev vrf_prod up
 
 # create interfaces
 ip link set dev eth1 down
@@ -27,7 +27,7 @@ ip link add link bridge0 name vlan10 type vlan id 10
 # s1 hosts
 if [ "$HOSTNAME" == "s1-host4" ]; then
 ip addr add 10.10.10.104/24 dev vlan10
-ip link set dev vlan10 master vrf_prod
+# ip link set dev vlan10 master vrf_prod
 fi
 
 # bring interfaces up
@@ -38,6 +38,7 @@ ip link set vlan10 up
 
 # add default route to vrf
 if [[ "$HOSTNAME" == "s1-host4" ]]; then
-ip route add default vrf vrf_prod via 10.10.10.1
+# ip route add default vrf vrf_prod via 10.10.10.1
+ip route add 10.0.0.0/8 via 10.10.10.1
 fi
 
