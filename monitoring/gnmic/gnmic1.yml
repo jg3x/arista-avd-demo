@@ -1,0 +1,108 @@
+targets:
+  s1-spine1:6030:
+    username: admin
+    password: admin
+    insecure: true
+  s1-spine2:6030:
+    username: admin
+    password: admin
+    insecure: true
+  s1-leaf1:6030:
+    username: admin
+    password: admin
+    insecure: true
+  s1-leaf2:6030:
+    username: admin
+    password: admin
+    insecure: true
+  s1-leaf3:6030:
+    username: admin
+    password: admin
+    insecure: true
+  s1-leaf4:6030:
+    username: admin
+    password: admin
+    insecure: true
+  s1-brdr1:6030:
+    username: admin
+    password: admin
+    insecure: true
+  s1-brdr2:6030:
+    username: admin
+    password: admin
+    insecure: true
+  s1-wifi-gw1:6030:
+    username: admin
+    password: admin
+    insecure: true
+  s1-wifi-gw2:6030:
+    username: admin
+    password: admin
+    insecure: true
+  s2-spine1:6030:
+    username: admin
+    password: admin
+    insecure: true
+  s2-spine2:6030:
+    username: admin
+    password: admin
+    insecure: true
+  s2-leaf1:6030:
+    username: admin
+    password: admin
+    insecure: true
+  s2-leaf2:6030:
+    username: admin
+    password: admin
+    insecure: true
+  s2-leaf3:6030:
+    username: admin
+    password: admin
+    insecure: true
+  s2-leaf4:6030:
+    username: admin
+    password: admin
+    insecure: true
+  s2-brdr1:6030:
+    username: admin
+    password: admin
+    insecure: true
+  s2-brdr2:6030:
+    username: admin
+    password: admin
+    insecure: true
+
+subscriptions:
+  interface-stats:
+    paths:
+      - /interfaces/interface/state/counters
+    mode: stream
+    stream-mode: sample
+    sample-interval: 10s
+  interface-oper-status:
+    paths:
+      - /interfaces/interface[name=*]/state/oper-status
+    mode: stream
+    stream-mode: sample
+    sample-interval: 10s
+  process-cpu:
+    mode: stream
+    stream-mode: sample
+    sample-interval: 15s
+    paths:
+      - /openconfig-system:system/processes/process/state/cpu-usage-system
+      - /openconfig-system:system/processes/process/state/cpu-usage-user
+      - /openconfig-system:system/processes/process/state/cpu-utilization
+
+  process-mem:
+    mode: stream
+    stream-mode: sample
+    sample-interval: 15s
+    paths:
+      - /openconfig-system:system/processes/process/state/memory-usage
+      - /openconfig-system:system/processes/process/state/memory-utilization
+outputs:
+  prom-output:
+    type: prometheus
+    listen: ":9273"
+    strings-as-labels: true

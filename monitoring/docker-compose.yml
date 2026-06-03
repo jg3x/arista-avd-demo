@@ -1,0 +1,55 @@
+services:
+  gnmic_collector:
+    image: ghcr.io/openconfig/gnmic:0.46.0
+    container_name: gnmic_collector
+    restart: unless-stopped
+    volumes:
+      - ./gnmic/gnmic1.yml:/etc/gnmic.yml:ro
+    command: "subscribe --config /etc/gnmic.yml"
+    ports:
+      - "9273:9273"
+    networks:
+      - clab_net
+  # telegraf:
+  #   image: telegraf:1.30
+  #   container_name: telegraf
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+  #   ports:
+  #     - "9273:9273"
+  #   networks:
+  #     - clab_net
+
+  prometheus:
+    image: prom/prometheus:v2.51.0
+    container_name: prometheus
+    restart: unless-stopped
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - clab_net
+
+  grafana:
+    image: grafana/grafana:10.4.1
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - grafana_data:/var/lib/grafana
+    networks:
+      - clab_net
+
+volumes:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  clab_net:
+    name: clab
+    external: true
