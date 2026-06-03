@@ -8,6 +8,7 @@ topology:
       image: arista/ceos:latest
       env:
         CLAB_MGMT_VRF: mgmt
+        CVADDR: ${CV_TATTR_ADDR:=none}
       startup-config: config/eos/default_startup.cfg
     linux:
       image: avd/alpine:3.19.7
@@ -17,18 +18,21 @@ topology:
       binds:
         - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
         - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
         - config/eos/EosIntfMapping/DCS-7050CX3-32S.json:/mnt/flash/EosIntfMapping.json:ro
     leaf:
       kind: arista_ceos
       binds:
         - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
         - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
         - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
     border:
       kind: arista_ceos
       binds:
         - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
         - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
         - config/eos/EosIntfMapping/DCS-7280SR3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
     server:
       kind: linux
@@ -47,6 +51,7 @@ topology:
       binds:
         - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
         - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
         - config/eos/EosIntfMapping/DCS-7050CX3-32S.json:/mnt/flash/EosIntfMapping.json:ro
     s1-spine2:
       group: spine
@@ -55,6 +60,7 @@ topology:
       binds:
         - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
         - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
         - config/eos/EosIntfMapping/DCS-7050CX3-32S.json:/mnt/flash/EosIntfMapping.json:ro
     s1-leaf1:
       group: leaf
@@ -63,6 +69,7 @@ topology:
       binds:
         - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
         - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
         - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
     s1-leaf2:
       group: leaf
@@ -71,6 +78,7 @@ topology:
       binds:
         - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
         - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
         - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
     s1-leaf3:
       group: leaf
@@ -79,6 +87,7 @@ topology:
       binds:
         - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
         - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
         - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
     s1-leaf4:
       group: leaf
@@ -87,6 +96,7 @@ topology:
       binds:
         - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
         - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
         - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
     s1-brdr1:
       group: border
@@ -138,6 +148,7 @@ topology:
       binds:
         - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
         - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
         - config/eos/EosIntfMapping/DCS-7050CX3-32S.json:/mnt/flash/EosIntfMapping.json:ro
     s2-spine2:
       group: spine
@@ -146,6 +157,7 @@ topology:
       binds:
         - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
         - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
         - config/eos/EosIntfMapping/DCS-7050CX3-32S.json:/mnt/flash/EosIntfMapping.json:ro
     s2-leaf1:
       group: leaf
@@ -154,6 +166,7 @@ topology:
       binds:
         - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
         - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
         - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
     s2-leaf2:
       group: leaf
@@ -162,6 +175,7 @@ topology:
       binds:
         - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
         - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
         - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
     s2-leaf3:
       group: leaf
@@ -170,6 +184,7 @@ topology:
       binds:
         - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
         - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
         - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
     s2-leaf4:
       group: leaf
@@ -178,6 +193,7 @@ topology:
       binds:
         - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
         - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
         - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
     s2-brdr1:
       group: border
