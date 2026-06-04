@@ -36,22 +36,14 @@ ip_name_servers:
 
 # TerminAttr
 daemon_terminattr:
-  # Address of the gRPC server on CloudVision
-  # TCP 9910 is used on on-prem
-  # TCP 443 is used on CV as a Service
   cvaddrs: # For single cluster
-    - "{{ lookup('ansible.builtin.env', 'CV_TATTR_ADDR') }}"
-  # Authentication scheme used to connect to CloudVision
+    - "{{ lookup('ansible.builtin.env', 'CV_TATTR_ADDR', default='1.2.3.4:443') }}"
   cvauth:
     method: token-secure
     token_file: "/mnt/flash/cv-onboarding-token"
-  # Exclude paths from Sysdb on the ingest side
   ingestexclude: /Sysdb/cell/1/agent,/Sysdb/cell/2/agent
-  # Exclude paths from the shared memory table
   smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
-  # The VRF to use to connect to CloudVision.
   cvvrf: mgmt
-  # Disable AAA authorization and accounting.
   disable_aaa: true
 
 # Point to Point Links MTU Override for Lab
