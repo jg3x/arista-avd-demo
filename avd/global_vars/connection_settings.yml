@@ -12,7 +12,7 @@ ansible_become_method: enable
 ansible_connection: httpapi
 ansible_httpapi_port: 443
 ansible_httpapi_use_ssl: true
-ansible_httpapi_validate_certs: true
+ansible_httpapi_validate_certs: false
 ansible_python_interpreter: $(which python3)
 avd_data_validation_mode: error
 
