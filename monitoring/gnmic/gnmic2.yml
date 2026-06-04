@@ -104,6 +104,25 @@ subscriptions:
       - /openconfig-system:system/processes/process/state/memory-usage
       - /openconfig-system:system/processes/process/state/memory-utilization
 
+  system-utilization:
+    mode: stream
+    stream-mode: sample
+    sample-interval: 15s
+    paths:
+      - /openconfig-system:system/cpus/cpu[index=ALL]/state/openconfig-system:total
+      - /openconfig-system:system/cpus/cpu[index=ALL]/state/openconfig-system:user
+      - /openconfig-system:system/memory/openconfig-system:state
+  
+  bgp-state:
+    mode: stream
+    stream-mode: sample
+    sample-interval: 10s
+    paths:
+      - /openconfig-network-instance:network-instances/network-instance[name=default]/protocols/protocol/bgp/neighbors/neighbor/state/session-state
+      - /openconfig-network-instance:network-instances/network-instance[name=default]/protocols/protocol/bgp/neighbors/neighbor/state/messages
+      - /openconfig-network-instance:network-instances/network-instance[name=*]/protocols/protocol/bgp/neighbors/neighbor/afi-safis/afi-safi/state/prefixes/received
+      - /openconfig-network-instance:network-instances/network-instance[name=*]/protocols/protocol/bgp/neighbors/neighbor/afi-safis/afi-safi/state/prefixes/sent
+
 outputs:
   prom-output:
     type: prometheus
