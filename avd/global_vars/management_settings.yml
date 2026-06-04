@@ -1,5 +1,4 @@
 management_api_gnmi:
-  provider: default
   transport:
     grpc:
       - name: default
