@@ -4,3 +4,4 @@ management_api_gnmi:
     grpc:
       - name: default
         vrf: mgmt
+        port: 6030
