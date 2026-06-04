@@ -1,5 +1,6 @@
 targets:
   s1-spine1:6030:
+    name: s1-spine1
     username: admin
     password: admin
     insecure: true
@@ -8,6 +9,7 @@ targets:
       pod: s1-pod1
       role: spine
   s1-spine2:6030:
+    name: s1-spine2
     username: admin
     password: admin
     insecure: true
@@ -16,6 +18,7 @@ targets:
       pod: s1-pod1
       role: spine
   s1-leaf1:6030:
+    name: s1-leaf1
     username: admin
     password: admin
     insecure: true
@@ -24,6 +27,7 @@ targets:
       pod: s1-pod1
       role: leaf
   s1-leaf2:6030:
+    name: s1-leaf2
     username: admin
     password: admin
     insecure: true
@@ -32,6 +36,7 @@ targets:
       pod: s1-pod1
       role: leaf
   s1-leaf3:6030:
+    name: s1-leaf3
     username: admin
     password: admin
     insecure: true
@@ -40,6 +45,7 @@ targets:
       pod: s1-pod1
       role: leaf
   s1-leaf4:6030:
+    name: s1-leaf4
     username: admin
     password: admin
     insecure: true
@@ -48,6 +54,7 @@ targets:
       pod: s1-pod1
       role: leaf
   s1-brdr1:6030:
+    name: s1-brdr1
     username: admin
     password: admin
     insecure: true
@@ -56,6 +63,7 @@ targets:
       pod: s1-pod1
       role: border
   s1-brdr2:6030:
+    name: s1-brdr2
     username: admin
     password: admin
     insecure: true
@@ -64,6 +72,7 @@ targets:
       pod: s1-pod1
       role: border
   s1-wifi-gw1:6030:
+    name: s1-wifi-gw1
     username: admin
     password: admin
     insecure: true
@@ -72,6 +81,7 @@ targets:
       pod: s1-pod1
       role: wifi-vtep
   s1-wifi-gw2:6030:
+    name: s1-wifi-gw2
     username: admin
     password: admin
     insecure: true

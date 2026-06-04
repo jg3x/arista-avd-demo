@@ -1,5 +1,6 @@
 targets:
   s2-spine1:6030:
+    name: s2-spine1
     username: admin
     password: admin
     insecure: true
@@ -8,6 +9,7 @@ targets:
       pod: s2-pod1
       role: spine
   s2-spine2:6030:
+    name: s2-spine2
     username: admin
     password: admin
     insecure: true
@@ -16,6 +18,7 @@ targets:
       pod: s2-pod1
       role: spine
   s2-leaf1:6030:
+    name: s2-leaf1
     username: admin
     password: admin
     insecure: true
@@ -24,6 +27,7 @@ targets:
       pod: s2-pod1
       role: leaf
   s2-leaf2:6030:
+    name: s2-leaf2
     username: admin
     password: admin
     insecure: true
@@ -32,6 +36,7 @@ targets:
       pod: s2-pod1
       role: leaf
   s2-leaf3:6030:
+    name: s2-leaf3
     username: admin
     password: admin
     insecure: true
@@ -40,6 +45,7 @@ targets:
       pod: s2-pod1
       role: leaf
   s2-leaf4:6030:
+    name: s2-leaf4
     username: admin
     password: admin
     insecure: true
@@ -48,6 +54,7 @@ targets:
       pod: s2-pod1
       role: leaf
   s2-brdr1:6030:
+    name: s2-brdr1
     username: admin
     password: admin
     insecure: true
@@ -56,6 +63,7 @@ targets:
       pod: s2-pod1
       role: border
   s2-brdr2:6030:
+    name: s2-brdr2
     username: admin
     password: admin
     insecure: true
