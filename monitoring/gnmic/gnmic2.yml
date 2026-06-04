@@ -1,84 +1,68 @@
 targets:
-  s1-spine1:6030:
+  s2-spine1:6030:
     username: admin
     password: admin
     insecure: true
     tags:
-      site: s1
-      pod: s1-pod1
+      site: s2
+      pod: s2-pod1
       role: spine
-  s1-spine2:6030:
+  s2-spine2:6030:
     username: admin
     password: admin
     insecure: true
     tags:
-      site: s1
-      pod: s1-pod1
+      site: s2
+      pod: s2-pod1
       role: spine
-  s1-leaf1:6030:
+  s2-leaf1:6030:
     username: admin
     password: admin
     insecure: true
     tags:
-      site: s1
-      pod: s1-pod1
+      site: s2
+      pod: s2-pod1
       role: leaf
-  s1-leaf2:6030:
+  s2-leaf2:6030:
     username: admin
     password: admin
     insecure: true
     tags:
-      site: s1
-      pod: s1-pod1
+      site: s2
+      pod: s2-pod1
       role: leaf
-  s1-leaf3:6030:
+  s2-leaf3:6030:
     username: admin
     password: admin
     insecure: true
     tags:
-      site: s1
-      pod: s1-pod1
+      site: s2
+      pod: s2-pod1
       role: leaf
-  s1-leaf4:6030:
+  s2-leaf4:6030:
     username: admin
     password: admin
     insecure: true
     tags:
-      site: s1
-      pod: s1-pod1
+      site: s2
+      pod: s2-pod1
       role: leaf
-  s1-brdr1:6030:
+  s2-brdr1:6030:
     username: admin
     password: admin
     insecure: true
     tags:
-      site: s1
-      pod: s1-pod1
+      site: s2
+      pod: s2-pod1
       role: border
-  s1-brdr2:6030:
+  s2-brdr2:6030:
     username: admin
     password: admin
     insecure: true
     tags:
-      site: s1
-      pod: s1-pod1
+      site: s2
+      pod: s2-pod1
       role: border
-  s1-wifi-gw1:6030:
-    username: admin
-    password: admin
-    insecure: true
-    tags:
-      site: s1
-      pod: s1-pod1
-      role: wifi-vtep
-  s1-wifi-gw2:6030:
-    username: admin
-    password: admin
-    insecure: true
-    tags:
-      site: s1
-      pod: s1-pod1
-      role: wifi-vtep
 
 subscriptions:
   interface-stats:

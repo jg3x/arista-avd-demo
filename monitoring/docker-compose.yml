@@ -1,13 +1,24 @@
 services:
-  gnmic_collector:
+  gnmic_collector_1:
     image: ghcr.io/openconfig/gnmic:0.46.0
-    container_name: gnmic_collector
+    container_name: gnmic_collector_1
     restart: unless-stopped
     volumes:
       - ./gnmic/gnmic1.yml:/etc/gnmic.yml:ro
     command: "subscribe --config /etc/gnmic.yml"
     ports:
       - "9273:9273"
+    networks:
+      - clab_net
+  gnmic_collector_2:
+    image: ghcr.io/openconfig/gnmic:0.46.0
+    container_name: gnmic_collector_2
+    restart: unless-stopped
+    volumes:
+      - ./gnmic/gnmic2.yml:/etc/gnmic.yml:ro
+    command: "subscribe --config /etc/gnmic.yml"
+    ports:
+      - "9274:9273"
     networks:
       - clab_net
   # telegraf:

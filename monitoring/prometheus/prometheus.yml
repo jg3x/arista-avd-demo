@@ -5,4 +5,4 @@ global:
 scrape_configs:
   - job_name: 'eos_gnmi'
     static_configs:
-      - targets: ['gnmic_collector:9273']
+      - targets: ['gnmic_collector_1:9273', 'gnmic_collector_2:9273']
