@@ -3,7 +3,7 @@ targets:
     username: admin
     password: admin
     insecure: true
-    tags:
+    event-tags:
       site: s1
       pod: s1-pod1
       role: spine
@@ -11,7 +11,7 @@ targets:
     username: admin
     password: admin
     insecure: true
-    tags:
+    event-tags:
       site: s1
       pod: s1-pod1
       role: spine
@@ -19,7 +19,7 @@ targets:
     username: admin
     password: admin
     insecure: true
-    tags:
+    event-tags:
       site: s1
       pod: s1-pod1
       role: leaf
@@ -27,7 +27,7 @@ targets:
     username: admin
     password: admin
     insecure: true
-    tags:
+    event-tags:
       site: s1
       pod: s1-pod1
       role: leaf
@@ -35,7 +35,7 @@ targets:
     username: admin
     password: admin
     insecure: true
-    tags:
+    event-tags:
       site: s1
       pod: s1-pod1
       role: leaf
@@ -43,7 +43,7 @@ targets:
     username: admin
     password: admin
     insecure: true
-    tags:
+    event-tags:
       site: s1
       pod: s1-pod1
       role: leaf
@@ -51,7 +51,7 @@ targets:
     username: admin
     password: admin
     insecure: true
-    tags:
+    event-tags:
       site: s1
       pod: s1-pod1
       role: border
@@ -59,7 +59,7 @@ targets:
     username: admin
     password: admin
     insecure: true
-    tags:
+    event-tags:
       site: s1
       pod: s1-pod1
       role: border
@@ -67,7 +67,7 @@ targets:
     username: admin
     password: admin
     insecure: true
-    tags:
+    event-tags:
       site: s1
       pod: s1-pod1
       role: wifi-vtep
@@ -75,7 +75,7 @@ targets:
     username: admin
     password: admin
     insecure: true
-    tags:
+    event-tags:
       site: s1
       pod: s1-pod1
       role: wifi-vtep
