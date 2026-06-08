@@ -321,12 +321,25 @@ vlan internal order ascending range 1006 1199
 
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
+| 10 | Servers | - |
+| 20 | Storage | - |
+| 3009 | MLAG_L3_VRF_PROD | MLAG |
 | 4093 | MLAG_L3 | MLAG |
 | 4094 | MLAG | MLAG |
 
 ### VLANs Device Configuration
 
 ```eos
+!
+vlan 10
+   name Servers
+!
+vlan 20
+   name Storage
+!
+vlan 3009
+   name MLAG_L3_VRF_PROD
+   trunk group MLAG
 !
 vlan 4093
    name MLAG_L3
@@ -461,6 +474,9 @@ interface Loopback1
 
 | Interface | Description | VRF |  MTU | Shutdown |
 | --------- | ----------- | --- | ---- | -------- |
+| Vlan10 | Servers | PROD | - | False |
+| Vlan20 | Storage | PROD | - | False |
+| Vlan3009 | MLAG_L3_VRF_PROD | PROD | 9200 | False |
 | Vlan4093 | MLAG_L3 | default | 9200 | False |
 | Vlan4094 | MLAG | default | 9200 | False |
 
@@ -468,12 +484,34 @@ interface Loopback1
 
 | Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | ACL In | ACL Out |
 | --------- | --- | ---------- | ------------------ | ------------------------- | ------ | ------- |
+| Vlan10 |  PROD  |  -  |  10.10.10.1/24  |  -  |  -  |  -  |
+| Vlan20 |  PROD  |  -  |  10.20.20.1/24  |  -  |  -  |  -  |
+| Vlan3009 |  PROD  |  10.252.2.8/31  |  -  |  -  |  -  |  -  |
 | Vlan4093 |  default  |  10.252.2.8/31  |  -  |  -  |  -  |  -  |
 | Vlan4094 |  default  |  10.251.2.8/31  |  -  |  -  |  -  |  -  |
 
 #### VLAN Interfaces Device Configuration
 
 ```eos
+!
+interface Vlan10
+   description Servers
+   no shutdown
+   vrf PROD
+   ip address virtual 10.10.10.1/24
+!
+interface Vlan20
+   description Storage
+   no shutdown
+   vrf PROD
+   ip address virtual 10.20.20.1/24
+!
+interface Vlan3009
+   description MLAG_L3_VRF_PROD
+   no shutdown
+   mtu 9200
+   vrf PROD
+   ip address 10.252.2.8/31
 !
 interface Vlan4093
    description MLAG_L3
@@ -495,9 +533,23 @@ interface Vlan4094
 
 | Setting | Value |
 | ------- | ----- |
-| Source Interface | Loopback1 |
+| Source Interface | Loopback0 |
+| MLAG Source Interface | Loopback1 |
 | UDP port | 4789 |
 | EVPN MLAG Shared Router MAC | mlag-system-id |
+
+##### VLAN to VNI, Flood List and Multicast Group Mappings
+
+| VLAN | VNI | Flood List | Multicast Group |
+| ---- | --- | ---------- | --------------- |
+| 10 | 10010 | - | - |
+| 20 | 10020 | - | - |
+
+##### VRF to VNI and Multicast Group Mappings
+
+| VRF | VNI | Overlay Multicast Group to Encap Mappings |
+| --- | --- | ----------------------------------------- |
+| PROD | 10 | - |
 
 #### VXLAN Interface Device Configuration
 
@@ -505,9 +557,13 @@ interface Vlan4094
 !
 interface Vxlan1
    description s2-brdr1_VTEP
-   vxlan source-interface Loopback1
+   vxlan source-interface Loopback0
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
+   vxlan vlan 10 vni 10010
+   vxlan vlan 20 vni 10020
+   vxlan vrf PROD vni 10
+   vxlan mlag source-interface Loopback1
 ```
 
 ## Routing
@@ -542,6 +598,7 @@ ip virtual-router mac-address 00:1c:73:00:00:99
 | --- | --------------- |
 | default | True |
 | mgmt | False |
+| PROD | True |
 
 #### IP Routing Device Configuration
 
@@ -549,6 +606,7 @@ ip virtual-router mac-address 00:1c:73:00:00:99
 !
 ip routing
 no ip routing vrf mgmt
+ip routing vrf PROD
 ```
 
 ### IPv6 Routing
@@ -559,6 +617,7 @@ no ip routing vrf mgmt
 | --- | --------------- |
 | default | False |
 | mgmt | false |
+| PROD | false |
 
 ### Static Routes
 
@@ -644,6 +703,7 @@ ASN Notation: asplain
 | 172.16.2.16 | 65200 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - |
 | 172.16.2.18 | 65200 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - |
 | 172.16.255.0 | 65103 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - |
+| 10.252.2.9 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | PROD | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - | - | - | - |
 
 #### Router BGP EVPN Address Family
 
@@ -661,6 +721,19 @@ ASN Notation: asplain
 | Remote Domain Peer Groups | EVPN-OVERLAY-CORE |
 | L3 Gateway Configured | True |
 | L3 Gateway Inter-domain | True |
+
+#### Router BGP VLANs
+
+| VLAN | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute |
+| ---- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ |
+| 10 | 10.250.2.7:10010 | 10010:10010<br>remote 10010:10010 | - | - | learned |
+| 20 | 10.250.2.7:10020 | 10020:10020<br>remote 10020:10020 | - | - | learned |
+
+#### Router BGP VRFs
+
+| VRF | Route-Distinguisher | Redistribute | Graceful Restart |
+| --- | ------------------- | ------------ | ---------------- |
+| PROD | 10.250.2.7:10 | connected | - |
 
 #### Router BGP Device Configuration
 
@@ -715,6 +788,20 @@ router bgp 65203
    neighbor 172.16.255.0 description s1-brdr1
    redistribute connected route-map RM-CONN-2-BGP
    !
+   vlan 10
+      rd 10.250.2.7:10010
+      rd evpn domain remote 10.250.2.7:10010
+      route-target both 10010:10010
+      route-target import export evpn domain remote 10010:10010
+      redistribute learned
+   !
+   vlan 20
+      rd 10.250.2.7:10020
+      rd evpn domain remote 10.250.2.7:10020
+      route-target both 10020:10020
+      route-target import export evpn domain remote 10020:10020
+      redistribute learned
+   !
    address-family evpn
       neighbor EVPN-OVERLAY-CORE activate
       neighbor EVPN-OVERLAY-CORE domain remote
@@ -726,6 +813,15 @@ router bgp 65203
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
       neighbor MLAG-IPv4-UNDERLAY-PEER activate
+   !
+   vrf PROD
+      rd 10.250.2.7:10
+      route-target import evpn 10:10
+      route-target export evpn 10:10
+      router-id 10.250.2.7
+      neighbor 10.252.2.9 peer group MLAG-IPv4-UNDERLAY-PEER
+      neighbor 10.252.2.9 description s2-brdr2_Vlan3009
+      redistribute connected route-map RM-CONN-2-BGP-VRFS
 ```
 
 ## BFD
@@ -774,6 +870,12 @@ router bfd
 | 10 | permit 10.250.2.0/24 eq 32 |
 | 20 | permit 10.255.2.0/24 eq 32 |
 
+##### PL-MLAG-PEER-VRFS
+
+| Sequence | Action |
+| -------- | ------ |
+| 10 | permit 10.252.2.8/31 |
+
 #### Prefix-lists Device Configuration
 
 ```eos
@@ -781,6 +883,9 @@ router bfd
 ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
    seq 10 permit 10.250.2.0/24 eq 32
    seq 20 permit 10.255.2.0/24 eq 32
+!
+ip prefix-list PL-MLAG-PEER-VRFS
+   seq 10 permit 10.252.2.8/31
 ```
 
 ### Route-maps
@@ -792,6 +897,13 @@ ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 | Sequence | Type | Match | Set | Sub-Route-Map | Continue |
 | -------- | ---- | ----- | --- | ------------- | -------- |
 | 10 | permit | ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY | - | - | - |
+
+##### RM-CONN-2-BGP-VRFS
+
+| Sequence | Type | Match | Set | Sub-Route-Map | Continue |
+| -------- | ---- | ----- | --- | ------------- | -------- |
+| 10 | deny | ip address prefix-list PL-MLAG-PEER-VRFS | - | - | - |
+| 20 | permit | - | - | - | - |
 
 ##### RM-MLAG-PEER-IN
 
@@ -806,6 +918,11 @@ ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 route-map RM-CONN-2-BGP permit 10
    match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 !
+route-map RM-CONN-2-BGP-VRFS deny 10
+   match ip address prefix-list PL-MLAG-PEER-VRFS
+!
+route-map RM-CONN-2-BGP-VRFS permit 20
+!
 route-map RM-MLAG-PEER-IN permit 10
    description Make routes learned over MLAG Peer-link less preferred on spines to ensure optimal routing
    set origin incomplete
@@ -818,10 +935,13 @@ route-map RM-MLAG-PEER-IN permit 10
 | VRF Name | IP Routing |
 | -------- | ---------- |
 | mgmt | disabled |
+| PROD | enabled |
 
 ### VRF Instances Device Configuration
 
 ```eos
 !
 vrf instance mgmt
+!
+vrf instance PROD
 ```
