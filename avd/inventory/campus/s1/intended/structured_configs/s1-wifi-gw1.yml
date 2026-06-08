@@ -57,9 +57,60 @@ management_interfaces:
 metadata:
   is_deployed: true
   platform: 7050SX3
-  pod_name: S1-POD01
-  dc_name: SITE1
   fabric_name: SITE1_FABRIC
+  cv_tags:
+    device_tags:
+    - name: topology_hint_network_type
+      value: campusV2
+    - name: topology_hint_type
+      value: Leaf
+    - name: Role
+      value: Leaf
+    - name: Campus
+      value: SITE1
+    - name: Campus-Pod
+      value: S1-POD01
+    - name: Access-Pod
+      value: S1-POD01-ACCESS
+    interface_tags:
+    - interface: Ethernet49/1
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+      - name: Link-Type
+        value: Fabric
+      - name: Link-Type
+        value: MLAG
+    - interface: Ethernet50/1
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+      - name: Link-Type
+        value: Fabric
+      - name: Link-Type
+        value: MLAG
+    - interface: Ethernet1
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+      - name: Link-Type
+        value: Fabric
+      - name: Link-Type
+        value: Uplink
+    - interface: Ethernet2
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+      - name: Link-Type
+        value: Fabric
+      - name: Link-Type
+        value: Uplink
+    - interface: Management1
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+      - name: Link-Type
+        value: Management
 mlag_configuration:
   domain_id: S1_WIFI_GW
   local_interface: Vlan4094
