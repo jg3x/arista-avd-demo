@@ -85,9 +85,74 @@ management_interfaces:
 metadata:
   is_deployed: true
   platform: cEOS
-  pod_name: S2-POD01
-  dc_name: SITE2
   fabric_name: SITE2_FABRIC
+  cv_tags:
+    device_tags:
+    - name: topology_hint_network_type
+      value: campusV2
+    - name: topology_hint_type
+      value: Spine
+    - name: Role
+      value: Spine
+    - name: Campus
+      value: SITE2
+    - name: Campus-Pod
+      value: S2-POD01
+    interface_tags:
+    - interface: Ethernet1/1
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+      - name: Link-Type
+        value: Fabric
+      - name: Link-Type
+        value: Downlink
+    - interface: Ethernet2/1
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+      - name: Link-Type
+        value: Fabric
+      - name: Link-Type
+        value: Downlink
+    - interface: Ethernet3/1
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+      - name: Link-Type
+        value: Fabric
+      - name: Link-Type
+        value: Downlink
+    - interface: Ethernet4/1
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+      - name: Link-Type
+        value: Fabric
+      - name: Link-Type
+        value: Downlink
+    - interface: Ethernet31/1
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+      - name: Link-Type
+        value: Fabric
+      - name: Link-Type
+        value: Downlink
+    - interface: Ethernet32/1
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+      - name: Link-Type
+        value: Fabric
+      - name: Link-Type
+        value: Downlink
+    - interface: Management0
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+      - name: Link-Type
+        value: Management
 prefix_lists:
 - name: PL-LOOPBACKS-EVPN-OVERLAY
   sequence_numbers:

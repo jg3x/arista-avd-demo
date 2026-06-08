@@ -70,9 +70,60 @@ management_interfaces:
 metadata:
   is_deployed: true
   platform: cEOS
-  pod_name: S2-POD01
-  dc_name: SITE2
   fabric_name: SITE2_FABRIC
+  cv_tags:
+    device_tags:
+    - name: topology_hint_network_type
+      value: campusV2
+    - name: topology_hint_type
+      value: Leaf
+    - name: Role
+      value: Leaf
+    - name: Campus
+      value: SITE2
+    - name: Campus-Pod
+      value: S2-POD01
+    - name: Access-Pod
+      value: S2-POD01-ACCESS
+    interface_tags:
+    - interface: Ethernet49/1
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+      - name: Link-Type
+        value: Fabric
+      - name: Link-Type
+        value: MLAG
+    - interface: Ethernet50/1
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+      - name: Link-Type
+        value: Fabric
+      - name: Link-Type
+        value: MLAG
+    - interface: Ethernet51/1
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+      - name: Link-Type
+        value: Fabric
+      - name: Link-Type
+        value: Uplink
+    - interface: Ethernet52/1
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+      - name: Link-Type
+        value: Fabric
+      - name: Link-Type
+        value: Uplink
+    - interface: Management0
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+      - name: Link-Type
+        value: Management
 mlag_configuration:
   domain_id: S2_BRDR
   local_interface: Vlan4094

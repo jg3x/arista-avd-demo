@@ -17,14 +17,14 @@
 
 | POD | Type | Node | Management IP | Platform | Provisioned in CloudVision | Serial Number |
 | --- | ---- | ---- | ------------- | -------- | -------------------------- | ------------- |
-| S2-POD01 | l3leaf | s2-brdr1 | 192.168.0.200/24 | cEOS | Provisioned | - |
-| S2-POD01 | l3leaf | s2-brdr2 | 192.168.0.201/24 | cEOS | Provisioned | - |
-| S2-POD01 | l3leaf | s2-leaf1 | 192.168.0.22/24 | 7050SX3 | Provisioned | - |
-| S2-POD01 | l3leaf | s2-leaf2 | 192.168.0.23/24 | 7050SX3 | Provisioned | - |
-| S2-POD01 | l3leaf | s2-leaf3 | 192.168.0.24/24 | 7050SX3 | Provisioned | - |
-| S2-POD01 | l3leaf | s2-leaf4 | 192.168.0.25/24 | 7050SX3 | Provisioned | - |
-| S2-POD01 | spine | s2-spine1 | 192.168.0.20/24 | cEOS | Provisioned | - |
-| S2-POD01 | spine | s2-spine2 | 192.168.0.21/24 | cEOS | Provisioned | - |
+| SITE2_FABRIC | l3leaf | s2-brdr1 | 192.168.0.200/24 | cEOS | Provisioned | - |
+| SITE2_FABRIC | l3leaf | s2-brdr2 | 192.168.0.201/24 | cEOS | Provisioned | - |
+| SITE2_FABRIC | l3leaf | s2-leaf1 | 192.168.0.22/24 | 7050SX3 | Provisioned | - |
+| SITE2_FABRIC | l3leaf | s2-leaf2 | 192.168.0.23/24 | 7050SX3 | Provisioned | - |
+| SITE2_FABRIC | l3leaf | s2-leaf3 | 192.168.0.24/24 | 7050SX3 | Provisioned | - |
+| SITE2_FABRIC | l3leaf | s2-leaf4 | 192.168.0.25/24 | 7050SX3 | Provisioned | - |
+| SITE2_FABRIC | spine | s2-spine1 | 192.168.0.20/24 | cEOS | Provisioned | - |
+| SITE2_FABRIC | spine | s2-spine2 | 192.168.0.21/24 | cEOS | Provisioned | - |
 
 > Provision status is based on Ansible inventory declaration and do not represent real status from CloudVision.
 
@@ -91,14 +91,14 @@
 
 | POD | Node | Loopback0 |
 | --- | ---- | --------- |
-| S2-POD01 | s2-brdr1 | 10.250.2.7/32 |
-| S2-POD01 | s2-brdr2 | 10.250.2.8/32 |
-| S2-POD01 | s2-leaf1 | 10.250.2.3/32 |
-| S2-POD01 | s2-leaf2 | 10.250.2.4/32 |
-| S2-POD01 | s2-leaf3 | 10.250.2.5/32 |
-| S2-POD01 | s2-leaf4 | 10.250.2.6/32 |
-| S2-POD01 | s2-spine1 | 10.250.2.1/32 |
-| S2-POD01 | s2-spine2 | 10.250.2.2/32 |
+| SITE2_FABRIC | s2-brdr1 | 10.250.2.7/32 |
+| SITE2_FABRIC | s2-brdr2 | 10.250.2.8/32 |
+| SITE2_FABRIC | s2-leaf1 | 10.250.2.3/32 |
+| SITE2_FABRIC | s2-leaf2 | 10.250.2.4/32 |
+| SITE2_FABRIC | s2-leaf3 | 10.250.2.5/32 |
+| SITE2_FABRIC | s2-leaf4 | 10.250.2.6/32 |
+| SITE2_FABRIC | s2-spine1 | 10.250.2.1/32 |
+| SITE2_FABRIC | s2-spine2 | 10.250.2.2/32 |
 
 ### VTEP Loopback VXLAN Tunnel Source Interfaces (VTEPs Only)
 
@@ -110,9 +110,9 @@
 
 | POD | Node | Loopback1 |
 | --- | ---- | --------- |
-| S2-POD01 | s2-brdr1 | 10.255.2.7/32 |
-| S2-POD01 | s2-brdr2 | 10.255.2.7/32 |
-| S2-POD01 | s2-leaf1 | 10.255.2.3/32 |
-| S2-POD01 | s2-leaf2 | 10.255.2.3/32 |
-| S2-POD01 | s2-leaf3 | 10.255.2.5/32 |
-| S2-POD01 | s2-leaf4 | 10.255.2.5/32 |
+| SITE2_FABRIC | s2-brdr1 | 10.255.2.7/32 |
+| SITE2_FABRIC | s2-brdr2 | 10.255.2.7/32 |
+| SITE2_FABRIC | s2-leaf1 | 10.255.2.3/32 |
+| SITE2_FABRIC | s2-leaf2 | 10.255.2.3/32 |
+| SITE2_FABRIC | s2-leaf3 | 10.255.2.5/32 |
+| SITE2_FABRIC | s2-leaf4 | 10.255.2.5/32 |
