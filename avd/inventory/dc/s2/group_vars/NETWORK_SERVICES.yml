@@ -7,10 +7,10 @@ tenants:
         vrf_vni: 10
         svis:
           - id: 10
-            name: 'Ten'
+            name: 'Servers'
             enabled: true
             ip_address_virtual: 10.10.10.1/24
           - id: 20
-            name: 'Twenty'
+            name: 'Storage'
             enabled: true
             ip_address_virtual: 10.20.20.1/24

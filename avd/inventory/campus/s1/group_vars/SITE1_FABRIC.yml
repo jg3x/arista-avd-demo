@@ -1,7 +1,8 @@
 ---
 fabric_name: SITE1_FABRIC
-dc_name: SITE1
-pod_name: S1-POD01
+campus: SITE1
+campus_pod: S1-POD01
+campus_access_pod: S1-POD01-ACCESS
 
 # Set Design Type to L3L2 with EVPN VXLAN
 design:
