@@ -7,7 +7,7 @@ topology:
     arista_ceos:
       image: arista/ceos:latest
       env:
-        CLAB_MGMT_VRF: mgmt
+        CLAB_MGMT_VRF: MGMT
         CVADDR: ${CV_TATTR_ADDR:=none}
       startup-config: config/eos/default_startup.cfg
     linux:
