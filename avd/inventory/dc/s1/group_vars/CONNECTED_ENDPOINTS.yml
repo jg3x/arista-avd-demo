@@ -1,0 +1,69 @@
+---
+port_profiles:
+
+  - profile: PP-VLAN10
+    mode: "access"
+    vlans: "10"
+    spanning_tree_portfast: edge
+    mtu: 9000
+  - profile: PP-VLAN20
+    mode: "access"
+    vlans: "20"
+    mtu: 9000
+    spanning_tree_portfast: edge
+  - profile: PP-TRUNK
+    mode: "trunk"
+    vlans: "10,20"
+    mtu: 9000
+
+###########################################################
+# ---------------- Endpoint Connectivity ---------------- #
+###########################################################
+
+servers:
+
+# # --------------------------------------------------------#
+# # Site1 RACK1 Endpoints
+# # --------------------------------------------------------#
+
+  - name: s1-host1                                      # Server name
+    rack: RACK1                                         # Informational RACK (optional)
+    adapters:
+      - endpoint_ports: [ eth1, eth2 ]                  # Server port to connect (optional)
+        switch_ports: [ Ethernet1, Ethernet1 ]          # Switch port to connect server (required)
+        switches: [ s1-leaf1, s1-leaf2 ]                # Switch to connect server (required)
+        profile: PP-VLAN10                              # Port profile to apply (required)
+        port_channel:
+          mode: active
+
+  - name: s1-host3
+    rack: RACK1
+    adapters:
+      - endpoint_ports: [ eth1, eth2 ]
+        switch_ports: [ Ethernet2, Ethernet2 ]
+        switches: [ s1-leaf1, s1-leaf2 ]
+        profile: PP-VLAN10
+        port_channel:
+          mode: active
+
+# # --------------------------------------------------------#
+# # Site1 RACK2 Endpoints
+# # --------------------------------------------------------#
+
+  - name: s1-host2                                      # Server name
+    rack: RACK2                                         # Informational RACK (optional)
+    adapters:
+      - endpoint_ports: [ eth1, eth2 ]                  # Server port to connect (optional)
+        switch_ports: [ Ethernet1, Ethernet1 ]          # Switch port to connect server (required)
+        switches: [ s1-leaf3, s1-leaf4 ]                # Switch to connect server (required)
+        profile: PP-VLAN20                              # Port profile to apply (required)
+        port_channel:
+          mode: active
+
+  - name: s1-host4
+    rack: RACK2
+    adapters:
+      - endpoint_ports: [ eth1, eth2 ]
+        switch_ports: [ Ethernet2, Ethernet2 ]
+        switches: [ s1-leaf3, s1-leaf4 ]
+        profile: PP-TRUNK

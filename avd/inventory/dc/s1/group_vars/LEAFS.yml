@@ -1,0 +1,7 @@
+---
+custom_structured_configuration_vxlan_interface:
+  vxlan1:
+    vxlan:
+      source_interface: Loopback0
+      mlag_source_interface: Loopback1
+      virtual_router_encapsulation_mac_address: mlag-system-id
