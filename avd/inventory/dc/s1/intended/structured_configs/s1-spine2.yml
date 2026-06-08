@@ -88,6 +88,16 @@ metadata:
   pod_name: S1-POD01
   dc_name: SITE1
   fabric_name: SITE1_FABRIC
+  cv_tags:
+    device_tags:
+    - name: topology_hint_datacenter
+      value: SITE1
+    - name: topology_hint_fabric
+      value: SITE1_FABRIC
+    - name: topology_hint_pod
+      value: S1-POD01
+    - name: topology_hint_type
+      value: spine
 prefix_lists:
 - name: PL-LOOPBACKS-EVPN-OVERLAY
   sequence_numbers:
