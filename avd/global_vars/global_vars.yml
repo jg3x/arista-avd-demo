@@ -108,31 +108,18 @@ load_interval:
 # Flow Tracking can also be enabled/disabled under each of the specific data models.
 # For general flow-tracking settings see `flow_tracking_settings`.
 fabric_flow_tracking:
-  # Enable flow-tracking on all fabric uplinks.
   uplinks:
     enabled: true
-
-  # Enable flow-tracking on all fabric downlinks.
   downlinks:
     enabled: true
-
-  # Enable flow-tracking on all endpoints ports.
   endpoints:
     enabled: true
-
-  # Enable flow-tracking on all p2p_links defined under l3_edge.
   l3_edge:
     enabled: true
-
-  # Enable flow-tracking on all MLAG peer interfaces.
   mlag_interfaces:
     enabled: true
-
-  # Enable flow-tracking on all node.l3_interfaces and network-services tenants.vrfs.l3_interfaces.
   l3_interfaces:
     enabled: true
-
-  # Enable flow-tracking on all node.l3_port_channels.
   l3_port_channels:
     enabled: true
 
@@ -154,3 +141,12 @@ flow_tracking_settings:
     record_export:
       on_inactive_timeout: 70000
       on_interval: 30000 # export records every 30,000ms (30s)
+
+bfd_multihop:
+  interval: 1200
+  min_rx: 1200
+  multiplier: 3
+
+bgp_peer_groups:
+  ipv4_underlay_peers:
+    bfd: true
