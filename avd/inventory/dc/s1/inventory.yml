@@ -19,11 +19,11 @@ SITE1:
             s1-leaf4:
             s1-brdr1:
             s1-brdr2:
-    SITE1_NETWORK_SERVICES:
+    NETWORK_SERVICES:
       children:
         SPINES:
         LEAFS:
-    SITE1_CONNECTED_ENDPOINTS:
+    CONNECTED_ENDPOINTS:
       children:
         SPINES:
         LEAFS:
