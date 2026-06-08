@@ -800,8 +800,8 @@ route_maps:
     type: permit
 router_bfd:
   multihop:
-    interval: 300
-    min_rx: 300
+    interval: 1200
+    min_rx: 1200
     multiplier: 3
 router_bgp:
   as: '65202'
@@ -825,6 +825,7 @@ router_bgp:
     route_map_in: RM-MLAG-PEER-IN
   - name: IPv4-UNDERLAY-PEERS
     type: ipv4
+    bfd: true
     send_community: all
     maximum_routes: 12000
   - name: EVPN-OVERLAY-PEERS
