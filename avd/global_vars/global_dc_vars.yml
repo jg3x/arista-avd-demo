@@ -86,10 +86,6 @@ l3_edge:
       interfaces: [ Ethernet55/1, Ethernet55/1 ]
       profile: S1_to_S2_profile
 
-# # CloudVision Topology Tags
-generate_cv_tags:
-  topology_hints: true
-
 network_ports:
 # Shut down unused ports based on the switch name (regex) and the target platform. 
 # If the network_ports model is used to configure downlink ports, this must be the first entry in the list. 

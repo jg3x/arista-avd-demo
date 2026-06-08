@@ -7,6 +7,11 @@ pod_name: S2-POD01
 design:
   type: l3ls-evpn
 
+# CloudVision Topology Tags
+generate_cv_tags:
+  topology_hints: true
+  campus_fabric: true
+
 # Spine Switches
 spine:
   defaults:
