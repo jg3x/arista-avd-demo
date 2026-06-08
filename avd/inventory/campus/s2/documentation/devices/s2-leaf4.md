@@ -4,9 +4,17 @@
 
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
+  - [IP Name Servers](#ip-name-servers)
+  - [NTP](#ntp)
+  - [Management API gNMI](#management-api-gnmi)
   - [Management API HTTP](#management-api-http)
 - [Authentication](#authentication)
+  - [Local Users](#local-users)
   - [Enable Password](#enable-password)
+  - [AAA Authorization](#aaa-authorization)
+- [Monitoring](#monitoring)
+  - [TerminAttr Daemon](#terminattr-daemon)
+  - [Flow Tracking](#flow-tracking)
 - [MLAG](#mlag)
   - [MLAG Summary](#mlag-summary)
   - [MLAG Device Configuration](#mlag-device-configuration)
@@ -30,6 +38,7 @@
   - [Virtual Router MAC Address](#virtual-router-mac-address)
   - [IP Routing](#ip-routing)
   - [IPv6 Routing](#ipv6-routing)
+  - [Static Routes](#static-routes)
   - [Router BGP](#router-bgp)
 - [BFD](#bfd)
   - [Router BFD](#router-bfd)
@@ -52,13 +61,13 @@
 
 | Management Interface | Description | Type | VRF | IP Address | Gateway |
 | -------------------- | ----------- | ---- | --- | ---------- | ------- |
-| Management1 | OOB_MANAGEMENT | oob | MGMT | 192.168.0.25/24 | - |
+| Management1 | OOB_MANAGEMENT | oob | mgmt | 192.168.0.25/24 | 192.168.0.1 |
 
 ##### IPv6
 
 | Management Interface | Description | Type | VRF | IPv6 Address | IPv6 Gateway |
 | -------------------- | ----------- | ---- | --- | ------------ | ------------ |
-| Management1 | OOB_MANAGEMENT | oob | MGMT | - | - |
+| Management1 | OOB_MANAGEMENT | oob | mgmt | - | - |
 
 #### Management Interfaces Device Configuration
 
@@ -67,8 +76,59 @@
 interface Management1
    description OOB_MANAGEMENT
    no shutdown
-   vrf MGMT
+   vrf mgmt
    ip address 192.168.0.25/24
+```
+
+### IP Name Servers
+
+#### IP Name Servers Summary
+
+| Name Server | VRF | Priority |
+| ----------- | --- | -------- |
+| 8.8.8.8 | mgmt | 0 |
+
+#### IP Name Servers Device Configuration
+
+```eos
+ip name-server vrf mgmt 8.8.8.8 priority 0
+```
+
+### NTP
+
+#### NTP Summary
+
+##### NTP Servers
+
+| Server | VRF | Preferred | Burst | iBurst | Version | Min Poll | Max Poll | Local-interface | Key |
+| ------ | --- | --------- | ----- | ------ | ------- | -------- | -------- | --------------- | --- |
+| time1.google.com | mgmt | - | - | True | - | - | - | - | - |
+| time2.google.com | mgmt | - | - | True | - | - | - | - | - |
+
+#### NTP Device Configuration
+
+```eos
+!
+ntp server vrf mgmt time1.google.com iburst
+ntp server vrf mgmt time2.google.com iburst
+```
+
+### Management API gNMI
+
+#### Management API gNMI Summary
+
+| Transport | SSL Profile | VRF | Notification Timestamp | ACL | Port | Authorization Requests |
+| --------- | ----------- | --- | ---------------------- | --- | ---- | ---------------------- |
+| default | - | mgmt | last-change-time | - | 6030 | - |
+
+#### Management API gNMI Device Configuration
+
+```eos
+!
+management api gnmi
+   transport grpc default
+      port 6030
+      vrf mgmt
 ```
 
 ### Management API HTTP
@@ -83,7 +143,7 @@ interface Management1
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
-| MGMT | - | - |
+| mgmt | - | - |
 
 #### Management API HTTP Device Configuration
 
@@ -93,15 +153,104 @@ management api http-commands
    protocol https
    no shutdown
    !
-   vrf MGMT
+   vrf mgmt
       no shutdown
 ```
 
 ## Authentication
 
+### Local Users
+
+#### Local Users Summary
+
+| User | Privilege | Role | Disabled | Shell |
+| ---- | --------- | ---- | -------- | ----- |
+| admin | 15 | network-admin | False | - |
+
+#### Local Users Device Configuration
+
+```eos
+!
+username admin privilege 15 role network-admin secret sha512 <removed>
+username admin ssh-key ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMq7V3lWrRkB0w63hdbG4gEZ8KuLFwf7cRv/3ln9GOU9nZhrfRHvLSRj9c07DvLi1aR/hBWkXBeKWLDMZurtcV8= avd@3b32407628ed
+```
+
 ### Enable Password
 
 Enable password has been disabled
+
+### AAA Authorization
+
+#### AAA Authorization Summary
+
+| Type | User Stores |
+| ---- | ----------- |
+| Exec | local |
+
+Authorization for configuration commands is disabled.
+
+#### AAA Authorization Device Configuration
+
+```eos
+aaa authorization exec default local
+!
+```
+
+## Monitoring
+
+### TerminAttr Daemon
+
+#### TerminAttr Daemon Summary
+
+| CV Compression | CloudVision Servers | VRF | Authentication | Smash Excludes | Ingest Exclude | Bypass AAA |
+| -------------- | ------------------- | --- | -------------- | -------------- | -------------- | ---------- |
+| gzip | 1.2.3.4:443 | mgmt | token-secure,/mnt/flash/cv-onboarding-token | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | True |
+
+#### TerminAttr Daemon Device Configuration
+
+```eos
+!
+daemon TerminAttr
+   exec /usr/bin/TerminAttr -cvaddr=1.2.3.4:443 -cvauth=token-secure,/mnt/flash/cv-onboarding-token -cvvrf=mgmt -disableaaa -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs
+   no shutdown
+```
+
+### Flow Tracking
+
+#### Flow Tracking Sampled
+
+| Sample Size | Minimum Sample Size | Hardware Offload for IPv4 | Hardware Offload for IPv6 | Encapsulations |
+| ----------- | ------------------- | ------------------------- | ------------------------- | -------------- |
+| 5000 | default | disabled | disabled | ipv4, ipv6 |
+
+##### Trackers Summary
+
+| Tracker Name | Record Export On Inactive Timeout | Record Export On Interval | MPLS | Number of Exporters | Applied On | Table Size |
+| ------------ | --------------------------------- | ------------------------- | ---- | ------------------- | ---------- | ---------- |
+| FLOW-TRACKER | 70000 | 30000 | - | 1 | Ethernet51/1<br>Ethernet52/1<br>Ethernet2<br>Ethernet3<br>Ethernet4<br>Ethernet5<br>Ethernet6<br>Ethernet7<br>Ethernet8<br>Ethernet9<br>Ethernet10<br>Ethernet11<br>Ethernet12<br>Ethernet13<br>Ethernet14<br>Ethernet15<br>Ethernet16<br>Ethernet17<br>Ethernet18<br>Ethernet19<br>Ethernet20<br>Ethernet21<br>Ethernet22<br>Ethernet23<br>Ethernet24<br>Ethernet25<br>Ethernet26<br>Ethernet27<br>Ethernet28<br>Ethernet29<br>Ethernet30<br>Ethernet31<br>Ethernet32<br>Ethernet33<br>Ethernet34<br>Ethernet35<br>Ethernet36<br>Ethernet37<br>Ethernet38<br>Ethernet39<br>Ethernet40<br>Ethernet41<br>Ethernet42<br>Ethernet43<br>Ethernet44<br>Ethernet45<br>Ethernet46<br>Ethernet47<br>Ethernet48<br>Port-Channel491<br>Port-Channel1 | - |
+
+##### Exporters Summary
+
+| Tracker Name | Exporter Name | Collector IP/Host | Collector Port | Local Interface |
+| ------------ | ------------- | ----------------- | -------------- | --------------- |
+| FLOW-TRACKER | CV-TELEMETRY | 127.0.0.1 | - | Loopback0 |
+
+#### Flow Tracking Device Configuration
+
+```eos
+!
+flow tracking sampled
+   encapsulation ipv4 ipv6
+   sample 5000
+   tracker FLOW-TRACKER
+      record export on inactive timeout 70000
+      record export on interval 30000
+      exporter CV-TELEMETRY
+         collector 127.0.0.1
+         local interface Loopback0
+         template interval 3600000
+   no shutdown
+```
 
 ## MLAG
 
@@ -212,6 +361,53 @@ vlan 4094
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet1 | SERVER_s2-host2_eth2 | *access | *20 | *- | *- | 1 |
+| Ethernet2 | UNUSED | - | - | - | - | - |
+| Ethernet3 | UNUSED | - | - | - | - | - |
+| Ethernet4 | UNUSED | - | - | - | - | - |
+| Ethernet5 | UNUSED | - | - | - | - | - |
+| Ethernet6 | UNUSED | - | - | - | - | - |
+| Ethernet7 | UNUSED | - | - | - | - | - |
+| Ethernet8 | UNUSED | - | - | - | - | - |
+| Ethernet9 | UNUSED | - | - | - | - | - |
+| Ethernet10 | UNUSED | - | - | - | - | - |
+| Ethernet11 | UNUSED | - | - | - | - | - |
+| Ethernet12 | UNUSED | - | - | - | - | - |
+| Ethernet13 | UNUSED | - | - | - | - | - |
+| Ethernet14 | UNUSED | - | - | - | - | - |
+| Ethernet15 | UNUSED | - | - | - | - | - |
+| Ethernet16 | UNUSED | - | - | - | - | - |
+| Ethernet17 | UNUSED | - | - | - | - | - |
+| Ethernet18 | UNUSED | - | - | - | - | - |
+| Ethernet19 | UNUSED | - | - | - | - | - |
+| Ethernet20 | UNUSED | - | - | - | - | - |
+| Ethernet21 | UNUSED | - | - | - | - | - |
+| Ethernet22 | UNUSED | - | - | - | - | - |
+| Ethernet23 | UNUSED | - | - | - | - | - |
+| Ethernet24 | UNUSED | - | - | - | - | - |
+| Ethernet25 | UNUSED | - | - | - | - | - |
+| Ethernet26 | UNUSED | - | - | - | - | - |
+| Ethernet27 | UNUSED | - | - | - | - | - |
+| Ethernet28 | UNUSED | - | - | - | - | - |
+| Ethernet29 | UNUSED | - | - | - | - | - |
+| Ethernet30 | UNUSED | - | - | - | - | - |
+| Ethernet31 | UNUSED | - | - | - | - | - |
+| Ethernet32 | UNUSED | - | - | - | - | - |
+| Ethernet33 | UNUSED | - | - | - | - | - |
+| Ethernet34 | UNUSED | - | - | - | - | - |
+| Ethernet35 | UNUSED | - | - | - | - | - |
+| Ethernet36 | UNUSED | - | - | - | - | - |
+| Ethernet37 | UNUSED | - | - | - | - | - |
+| Ethernet38 | UNUSED | - | - | - | - | - |
+| Ethernet39 | UNUSED | - | - | - | - | - |
+| Ethernet40 | UNUSED | - | - | - | - | - |
+| Ethernet41 | UNUSED | - | - | - | - | - |
+| Ethernet42 | UNUSED | - | - | - | - | - |
+| Ethernet43 | UNUSED | - | - | - | - | - |
+| Ethernet44 | UNUSED | - | - | - | - | - |
+| Ethernet45 | UNUSED | - | - | - | - | - |
+| Ethernet46 | UNUSED | - | - | - | - | - |
+| Ethernet47 | UNUSED | - | - | - | - | - |
+| Ethernet48 | UNUSED | - | - | - | - | - |
 | Ethernet49/1 | MLAG_s2-leaf3_Ethernet49/1 | *trunk | *- | *- | *MLAG | 491 |
 | Ethernet50/1 | MLAG_s2-leaf3_Ethernet50/1 | *trunk | *- | *- | *MLAG | 491 |
 
@@ -221,8 +417,8 @@ vlan 4094
 
 | Interface | Description | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet51/1 | P2P_s2-spine1_Ethernet4/1 | - | 172.16.2.13/31 | default | 9214 | False | - | - |
-| Ethernet52/1 | P2P_s2-spine2_Ethernet4/1 | - | 172.16.2.15/31 | default | 9214 | False | - | - |
+| Ethernet51/1 | P2P_s2-spine1_Ethernet4/1 | - | 172.16.2.13/31 | default | 9200 | False | - | - |
+| Ethernet52/1 | P2P_s2-spine2_Ethernet4/1 | - | 172.16.2.15/31 | default | 9200 | False | - | - |
 
 #### Ethernet Interfaces Device Configuration
 
@@ -232,6 +428,288 @@ interface Ethernet1
    description SERVER_s2-host2_eth2
    no shutdown
    channel-group 1 mode active
+!
+interface Ethernet2
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet3
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet4
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet5
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet6
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet7
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet8
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet9
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet10
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet11
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet12
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet13
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet14
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet15
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet16
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet17
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet18
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet19
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet20
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet21
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet22
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet23
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet24
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet25
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet26
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet27
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet28
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet29
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet30
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet31
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet32
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet33
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet34
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet35
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet36
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet37
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet38
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet39
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet40
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet41
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet42
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet43
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet44
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet45
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet46
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet47
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
+!
+interface Ethernet48
+   description UNUSED
+   shutdown
+   switchport
+   flow tracker sampled FLOW-TRACKER
 !
 interface Ethernet49/1
    description MLAG_s2-leaf3_Ethernet49/1
@@ -246,15 +724,17 @@ interface Ethernet50/1
 interface Ethernet51/1
    description P2P_s2-spine1_Ethernet4/1
    no shutdown
-   mtu 9214
+   mtu 9200
    no switchport
+   flow tracker sampled FLOW-TRACKER
    ip address 172.16.2.13/31
 !
 interface Ethernet52/1
    description P2P_s2-spine2_Ethernet4/1
    no shutdown
-   mtu 9214
+   mtu 9200
    no switchport
+   flow tracker sampled FLOW-TRACKER
    ip address 172.16.2.15/31
 ```
 
@@ -280,6 +760,7 @@ interface Port-Channel1
    switchport access vlan 20
    switchport mode access
    switchport
+   flow tracker sampled FLOW-TRACKER
    mlag 1
    spanning-tree portfast
 !
@@ -289,6 +770,7 @@ interface Port-Channel491
    switchport mode trunk
    switchport trunk group MLAG
    switchport
+   flow tracker sampled FLOW-TRACKER
 ```
 
 ### Loopback Interfaces
@@ -332,9 +814,9 @@ interface Loopback1
 | --------- | ----------- | --- | ---- | -------- |
 | Vlan10 | Ten | PROD | - | False |
 | Vlan20 | Twenty | PROD | - | False |
-| Vlan3009 | MLAG_L3_VRF_PROD | PROD | 9214 | False |
-| Vlan4093 | MLAG_L3 | default | 9214 | False |
-| Vlan4094 | MLAG | default | 9214 | False |
+| Vlan3009 | MLAG_L3_VRF_PROD | PROD | 9200 | False |
+| Vlan4093 | MLAG_L3 | default | 9200 | False |
+| Vlan4094 | MLAG | default | 9200 | False |
 
 ##### IPv4
 
@@ -365,20 +847,20 @@ interface Vlan20
 interface Vlan3009
    description MLAG_L3_VRF_PROD
    no shutdown
-   mtu 9214
+   mtu 9200
    vrf PROD
    ip address 10.252.2.5/31
 !
 interface Vlan4093
    description MLAG_L3
    no shutdown
-   mtu 9214
+   mtu 9200
    ip address 10.252.2.5/31
 !
 interface Vlan4094
    description MLAG
    no shutdown
-   mtu 9214
+   mtu 9200
    no autostate
    ip address 10.251.2.5/31
 ```
@@ -453,7 +935,7 @@ ip virtual-router mac-address 00:1c:73:00:00:99
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | True |
-| MGMT | False |
+| mgmt | False |
 | PROD | True |
 
 #### IP Routing Device Configuration
@@ -461,7 +943,7 @@ ip virtual-router mac-address 00:1c:73:00:00:99
 ```eos
 !
 ip routing
-no ip routing vrf MGMT
+no ip routing vrf mgmt
 ip routing vrf PROD
 ```
 
@@ -472,8 +954,23 @@ ip routing vrf PROD
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | False |
-| MGMT | false |
+| mgmt | false |
 | PROD | false |
+
+### Static Routes
+
+#### Static Routes Summary
+
+| VRF | Destination Prefix | Next Hop IP | Exit interface | Administrative Distance | Tag | Route Name | Metric |
+| --- | ------------------ | ----------- | -------------- | ----------------------- | --- | ---------- | ------ |
+| mgmt | 0.0.0.0/0 | 192.168.0.1 | - | 1 | - | - | - |
+
+#### Static Routes Device Configuration
+
+```eos
+!
+ip route vrf mgmt 0.0.0.0/0 192.168.0.1
+```
 
 ### Router BGP
 
@@ -734,14 +1231,14 @@ route-map RM-MLAG-PEER-IN permit 10
 
 | VRF Name | IP Routing |
 | -------- | ---------- |
-| MGMT | disabled |
+| mgmt | disabled |
 | PROD | enabled |
 
 ### VRF Instances Device Configuration
 
 ```eos
 !
-vrf instance MGMT
+vrf instance mgmt
 !
 vrf instance PROD
 ```

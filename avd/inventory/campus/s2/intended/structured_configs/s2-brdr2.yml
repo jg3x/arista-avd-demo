@@ -25,7 +25,9 @@ ethernet_interfaces:
 - name: Ethernet51/1
   description: P2P_s2-spine1_Ethernet32/1
   shutdown: false
-  mtu: 9214
+  mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.2.21/31
   peer: s2-spine1
   peer_interface: Ethernet32/1
@@ -35,18 +37,59 @@ ethernet_interfaces:
 - name: Ethernet52/1
   description: P2P_s2-spine2_Ethernet32/1
   shutdown: false
-  mtu: 9214
+  mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.2.23/31
   peer: s2-spine2
   peer_interface: Ethernet32/1
   peer_type: spine
   switchport:
     enabled: false
+- name: Ethernet55/1
+  description: P2P_s1-brdr2_Ethernet55/1
+  shutdown: false
+  mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  ip_address: 172.16.255.3/31
+  peer: s1-brdr2
+  peer_interface: Ethernet55/1
+  peer_type: other
+  switchport:
+    enabled: false
+flow_tracking:
+  sampled:
+    encapsulation:
+      ipv4_ipv6: true
+      mpls: false
+    sample: 5000
+    trackers:
+    - record_export:
+        on_inactive_timeout: 70000
+        on_interval: 30000
+      name: FLOW-TRACKER
+      exporters:
+      - name: CV-TELEMETRY
+        collectors:
+        - host: 127.0.0.1
+        local_interface: Loopback0
+        template_interval: 3600000
+    shutdown: false
 hostname: s2-brdr2
 ip_igmp_snooping:
   globally_enabled: true
 ip_routing: true
 ip_virtual_router_mac_address: 00:1c:73:00:00:99
+load_interval:
+  default: 1
+local_users:
+- name: admin
+  privilege: 15
+  role: network-admin
+  sha512_password: $6$arista$zo8APuuc.j2mn1Ic7FNXCUzUugtzyuFikDc5Q.Qi1RDei.U6dfH/MtlaKZJGmm6fKjD4GyYgQvVfCfYEqG1PT1
+  ssh_key: ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMq7V3lWrRkB0w63hdbG4gEZ8KuLFwf7cRv/3ln9GOU9nZhrfRHvLSRj9c07DvLi1aR/hBWkXBeKWLDMZurtcV8=
+    avd@3b32407628ed
 loopback_interfaces:
 - name: Loopback0
   description: ROUTER_ID
@@ -59,14 +102,15 @@ loopback_interfaces:
 management_api_http:
   enable_https: true
   enable_vrfs:
-  - name: MGMT
+  - name: mgmt
 management_interfaces:
-- name: Management0
+- name: Management1
   description: OOB_MANAGEMENT
   shutdown: false
-  vrf: MGMT
+  vrf: mgmt
   ip_address: 192.168.0.201/24
   type: oob
+  gateway: 192.168.0.1
 metadata:
   is_deployed: true
   platform: cEOS
@@ -118,7 +162,11 @@ metadata:
         value: Fabric
       - name: Link-Type
         value: Uplink
-    - interface: Management0
+    - interface: Ethernet55/1
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Management1
       tags:
       - name: Link-Type
         value: AVD-Managed
@@ -135,6 +183,8 @@ port_channel_interfaces:
 - name: Port-Channel491
   description: MLAG_s2-brdr1_Port-Channel491
   shutdown: false
+  flow_tracker:
+    sampled: FLOW-TRACKER
   switchport:
     enabled: true
     mode: trunk
@@ -245,6 +295,11 @@ router_bgp:
     remote_as: '65103'
     peer: s1-brdr2
     description: s1-brdr2
+  - ip_address: 172.16.255.2
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65103'
+    peer: s1-brdr2
+    description: s1-brdr2
   redistribute:
     connected:
       enabled: true
@@ -327,18 +382,22 @@ spanning_tree:
   - id: '0'
     priority: 4096
   no_spanning_tree_vlan: 4093-4094
+static_routes:
+- vrf: mgmt
+  prefix: 0.0.0.0/0
+  next_hop: 192.168.0.1
 transceiver_qsfp_default_mode_4x10: true
 vlan_interfaces:
 - name: Vlan4093
   description: MLAG_L3
   shutdown: false
   ip_address: 10.252.2.9/31
-  mtu: 9214
+  mtu: 9200
 - name: Vlan4094
   description: MLAG
   shutdown: false
   ip_address: 10.251.2.9/31
-  mtu: 9214
+  mtu: 9200
   no_autostate: true
 - name: Vlan10
   description: Ten
@@ -357,7 +416,7 @@ vlan_interfaces:
   shutdown: false
   vrf: PROD
   ip_address: 10.252.2.9/31
-  mtu: 9214
+  mtu: 9200
   tenant: S2_FABRIC
   type: underlay_peering
 vlan_internal_order:
@@ -388,7 +447,7 @@ vlans:
   - MLAG
   tenant: S2_FABRIC
 vrfs:
-- name: MGMT
+- name: mgmt
   ip_routing: false
 - name: PROD
   ip_routing: true

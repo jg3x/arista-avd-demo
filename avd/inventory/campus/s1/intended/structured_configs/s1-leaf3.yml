@@ -25,7 +25,9 @@ ethernet_interfaces:
 - name: Ethernet51/1
   description: P2P_s1-spine1_Ethernet3/1
   shutdown: false
-  mtu: 9214
+  mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.1.9/31
   peer: s1-spine1
   peer_interface: Ethernet3/1
@@ -35,7 +37,9 @@ ethernet_interfaces:
 - name: Ethernet52/1
   description: P2P_s1-spine2_Ethernet3/1
   shutdown: false
-  mtu: 9214
+  mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.1.11/31
   peer: s1-spine2
   peer_interface: Ethernet3/1
@@ -56,6 +60,8 @@ ethernet_interfaces:
   description: SERVER_s1-host4_eth1
   shutdown: false
   mtu: 9000
+  flow_tracker:
+    sampled: FLOW-TRACKER
   peer: s1-host4
   peer_interface: eth1
   peer_type: server
@@ -65,11 +71,406 @@ ethernet_interfaces:
     mode: trunk
     trunk:
       allowed_vlan: 10,20
+- name: Ethernet3
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet4
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet5
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet6
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet7
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet8
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet9
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet10
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet11
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet12
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet13
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet14
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet15
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet16
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet17
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet18
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet19
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet20
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet21
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet22
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet23
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet24
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet25
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet26
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet27
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet28
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet29
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet30
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet31
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet32
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet33
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet34
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet35
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet36
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet37
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet38
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet39
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet40
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet41
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet42
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet43
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet44
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet45
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet46
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet47
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+- name: Ethernet48
+  description: UNUSED
+  shutdown: true
+  flow_tracker:
+    sampled: FLOW-TRACKER
+  peer_type: network_port
+  switchport:
+    enabled: true
+flow_tracking:
+  sampled:
+    encapsulation:
+      ipv4_ipv6: true
+      mpls: false
+    sample: 5000
+    trackers:
+    - record_export:
+        on_inactive_timeout: 70000
+        on_interval: 30000
+      name: FLOW-TRACKER
+      exporters:
+      - name: CV-TELEMETRY
+        collectors:
+        - host: 127.0.0.1
+        local_interface: Loopback0
+        template_interval: 3600000
+    shutdown: false
 hostname: s1-leaf3
 ip_igmp_snooping:
   globally_enabled: true
 ip_routing: true
 ip_virtual_router_mac_address: 00:1c:73:00:00:99
+load_interval:
+  default: 1
+local_users:
+- name: admin
+  privilege: 15
+  role: network-admin
+  sha512_password: $6$arista$zo8APuuc.j2mn1Ic7FNXCUzUugtzyuFikDc5Q.Qi1RDei.U6dfH/MtlaKZJGmm6fKjD4GyYgQvVfCfYEqG1PT1
+  ssh_key: ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMq7V3lWrRkB0w63hdbG4gEZ8KuLFwf7cRv/3ln9GOU9nZhrfRHvLSRj9c07DvLi1aR/hBWkXBeKWLDMZurtcV8=
+    avd@3b32407628ed
 loopback_interfaces:
 - name: Loopback0
   description: ROUTER_ID
@@ -82,14 +483,15 @@ loopback_interfaces:
 management_api_http:
   enable_https: true
   enable_vrfs:
-  - name: MGMT
+  - name: mgmt
 management_interfaces:
 - name: Management1
   description: OOB_MANAGEMENT
   shutdown: false
-  vrf: MGMT
+  vrf: mgmt
   ip_address: 192.168.0.14/24
   type: oob
+  gateway: 192.168.0.1
 metadata:
   is_deployed: true
   platform: 7050SX3
@@ -149,6 +551,190 @@ metadata:
       tags:
       - name: Link-Type
         value: AVD-Managed
+    - interface: Ethernet3
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet4
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet5
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet6
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet7
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet8
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet9
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet10
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet11
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet12
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet13
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet14
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet15
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet16
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet17
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet18
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet19
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet20
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet21
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet22
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet23
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet24
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet25
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet26
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet27
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet28
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet29
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet30
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet31
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet32
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet33
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet34
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet35
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet36
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet37
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet38
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet39
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet40
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet41
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet42
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet43
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet44
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet45
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet46
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet47
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
+    - interface: Ethernet48
+      tags:
+      - name: Link-Type
+        value: AVD-Managed
     - interface: Management1
       tags:
       - name: Link-Type
@@ -166,6 +752,8 @@ port_channel_interfaces:
 - name: Port-Channel491
   description: MLAG_s1-leaf4_Port-Channel491
   shutdown: false
+  flow_tracker:
+    sampled: FLOW-TRACKER
   switchport:
     enabled: true
     mode: trunk
@@ -178,6 +766,8 @@ port_channel_interfaces:
   mtu: 9000
   mlag: 1
   spanning_tree_portfast: edge
+  flow_tracker:
+    sampled: FLOW-TRACKER
   switchport:
     enabled: true
     mode: access
@@ -339,18 +929,22 @@ spanning_tree:
   - id: '0'
     priority: 4096
   no_spanning_tree_vlan: 4093-4094
+static_routes:
+- vrf: mgmt
+  prefix: 0.0.0.0/0
+  next_hop: 192.168.0.1
 transceiver_qsfp_default_mode_4x10: true
 vlan_interfaces:
 - name: Vlan4093
   description: MLAG_L3
   shutdown: false
   ip_address: 10.252.1.4/31
-  mtu: 9214
+  mtu: 9200
 - name: Vlan4094
   description: MLAG
   shutdown: false
   ip_address: 10.251.1.4/31
-  mtu: 9214
+  mtu: 9200
   no_autostate: true
 - name: Vlan10
   description: WIFI-AP-MGMT
@@ -373,7 +967,7 @@ vlan_interfaces:
   shutdown: false
   vrf: PROD
   ip_address: 10.252.1.4/31
-  mtu: 9214
+  mtu: 9200
   tenant: S1_FABRIC
   type: underlay_peering
 vlan_internal_order:
@@ -404,7 +998,7 @@ vlans:
   - MLAG
   tenant: S1_FABRIC
 vrfs:
-- name: MGMT
+- name: mgmt
   ip_routing: false
 - name: PROD
   ip_routing: true

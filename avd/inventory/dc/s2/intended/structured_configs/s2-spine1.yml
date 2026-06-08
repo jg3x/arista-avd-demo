@@ -7,7 +7,9 @@ ethernet_interfaces:
 - name: Ethernet1/1
   description: P2P_s2-leaf1_Ethernet51/1
   shutdown: false
-  mtu: 9214
+  mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.2.0/31
   peer: s2-leaf1
   peer_interface: Ethernet51/1
@@ -17,7 +19,9 @@ ethernet_interfaces:
 - name: Ethernet2/1
   description: P2P_s2-leaf2_Ethernet51/1
   shutdown: false
-  mtu: 9214
+  mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.2.4/31
   peer: s2-leaf2
   peer_interface: Ethernet51/1
@@ -27,7 +31,9 @@ ethernet_interfaces:
 - name: Ethernet3/1
   description: P2P_s2-leaf3_Ethernet51/1
   shutdown: false
-  mtu: 9214
+  mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.2.8/31
   peer: s2-leaf3
   peer_interface: Ethernet51/1
@@ -37,7 +43,9 @@ ethernet_interfaces:
 - name: Ethernet4/1
   description: P2P_s2-leaf4_Ethernet51/1
   shutdown: false
-  mtu: 9214
+  mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.2.12/31
   peer: s2-leaf4
   peer_interface: Ethernet51/1
@@ -47,7 +55,9 @@ ethernet_interfaces:
 - name: Ethernet31/1
   description: P2P_s2-brdr1_Ethernet51/1
   shutdown: false
-  mtu: 9214
+  mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.2.16/31
   peer: s2-brdr1
   peer_interface: Ethernet51/1
@@ -57,15 +67,44 @@ ethernet_interfaces:
 - name: Ethernet32/1
   description: P2P_s2-brdr2_Ethernet51/1
   shutdown: false
-  mtu: 9214
+  mtu: 9200
+  flow_tracker:
+    sampled: FLOW-TRACKER
   ip_address: 172.16.2.20/31
   peer: s2-brdr2
   peer_interface: Ethernet51/1
   peer_type: l3leaf
   switchport:
     enabled: false
+flow_tracking:
+  sampled:
+    encapsulation:
+      ipv4_ipv6: true
+      mpls: false
+    sample: 5000
+    trackers:
+    - record_export:
+        on_inactive_timeout: 70000
+        on_interval: 30000
+      name: FLOW-TRACKER
+      exporters:
+      - name: CV-TELEMETRY
+        collectors:
+        - host: 127.0.0.1
+        local_interface: Loopback0
+        template_interval: 3600000
+    shutdown: false
 hostname: s2-spine1
 ip_routing: true
+load_interval:
+  default: 1
+local_users:
+- name: admin
+  privilege: 15
+  role: network-admin
+  sha512_password: $6$arista$zo8APuuc.j2mn1Ic7FNXCUzUugtzyuFikDc5Q.Qi1RDei.U6dfH/MtlaKZJGmm6fKjD4GyYgQvVfCfYEqG1PT1
+  ssh_key: ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMq7V3lWrRkB0w63hdbG4gEZ8KuLFwf7cRv/3ln9GOU9nZhrfRHvLSRj9c07DvLi1aR/hBWkXBeKWLDMZurtcV8=
+    avd@3b32407628ed
 loopback_interfaces:
 - name: Loopback0
   description: ROUTER_ID
@@ -74,14 +113,15 @@ loopback_interfaces:
 management_api_http:
   enable_https: true
   enable_vrfs:
-  - name: MGMT
+  - name: mgmt
 management_interfaces:
-- name: Management0
+- name: Management1
   description: OOB_MANAGEMENT
   shutdown: false
-  vrf: MGMT
+  vrf: mgmt
   ip_address: 192.168.0.20/24
   type: oob
+  gateway: 192.168.0.1
 metadata:
   is_deployed: true
   platform: cEOS
@@ -215,6 +255,10 @@ router_bgp:
 service_routing_protocols_model: multi-agent
 spanning_tree:
   mode: none
+static_routes:
+- vrf: mgmt
+  prefix: 0.0.0.0/0
+  next_hop: 192.168.0.1
 transceiver_qsfp_default_mode_4x10: true
 vlan_internal_order:
   allocation: ascending
@@ -222,5 +266,5 @@ vlan_internal_order:
     beginning: 1006
     ending: 1199
 vrfs:
-- name: MGMT
+- name: mgmt
   ip_routing: false

@@ -4,9 +4,17 @@
 
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
+  - [IP Name Servers](#ip-name-servers)
+  - [NTP](#ntp)
+  - [Management API gNMI](#management-api-gnmi)
   - [Management API HTTP](#management-api-http)
 - [Authentication](#authentication)
+  - [Local Users](#local-users)
   - [Enable Password](#enable-password)
+  - [AAA Authorization](#aaa-authorization)
+- [Monitoring](#monitoring)
+  - [TerminAttr Daemon](#terminattr-daemon)
+  - [Flow Tracking](#flow-tracking)
 - [Spanning Tree](#spanning-tree)
   - [Spanning Tree Summary](#spanning-tree-summary)
   - [Spanning Tree Device Configuration](#spanning-tree-device-configuration)
@@ -20,6 +28,7 @@
   - [Service Routing Protocols Model](#service-routing-protocols-model)
   - [IP Routing](#ip-routing)
   - [IPv6 Routing](#ipv6-routing)
+  - [Static Routes](#static-routes)
   - [Router BGP](#router-bgp)
 - [BFD](#bfd)
   - [Router BFD](#router-bfd)
@@ -40,23 +49,74 @@
 
 | Management Interface | Description | Type | VRF | IP Address | Gateway |
 | -------------------- | ----------- | ---- | --- | ---------- | ------- |
-| Management0 | OOB_MANAGEMENT | oob | MGMT | 192.168.0.20/24 | - |
+| Management1 | OOB_MANAGEMENT | oob | mgmt | 192.168.0.20/24 | 192.168.0.1 |
 
 ##### IPv6
 
 | Management Interface | Description | Type | VRF | IPv6 Address | IPv6 Gateway |
 | -------------------- | ----------- | ---- | --- | ------------ | ------------ |
-| Management0 | OOB_MANAGEMENT | oob | MGMT | - | - |
+| Management1 | OOB_MANAGEMENT | oob | mgmt | - | - |
 
 #### Management Interfaces Device Configuration
 
 ```eos
 !
-interface Management0
+interface Management1
    description OOB_MANAGEMENT
    no shutdown
-   vrf MGMT
+   vrf mgmt
    ip address 192.168.0.20/24
+```
+
+### IP Name Servers
+
+#### IP Name Servers Summary
+
+| Name Server | VRF | Priority |
+| ----------- | --- | -------- |
+| 8.8.8.8 | mgmt | 0 |
+
+#### IP Name Servers Device Configuration
+
+```eos
+ip name-server vrf mgmt 8.8.8.8 priority 0
+```
+
+### NTP
+
+#### NTP Summary
+
+##### NTP Servers
+
+| Server | VRF | Preferred | Burst | iBurst | Version | Min Poll | Max Poll | Local-interface | Key |
+| ------ | --- | --------- | ----- | ------ | ------- | -------- | -------- | --------------- | --- |
+| time1.google.com | mgmt | - | - | True | - | - | - | - | - |
+| time2.google.com | mgmt | - | - | True | - | - | - | - | - |
+
+#### NTP Device Configuration
+
+```eos
+!
+ntp server vrf mgmt time1.google.com iburst
+ntp server vrf mgmt time2.google.com iburst
+```
+
+### Management API gNMI
+
+#### Management API gNMI Summary
+
+| Transport | SSL Profile | VRF | Notification Timestamp | ACL | Port | Authorization Requests |
+| --------- | ----------- | --- | ---------------------- | --- | ---- | ---------------------- |
+| default | - | mgmt | last-change-time | - | 6030 | - |
+
+#### Management API gNMI Device Configuration
+
+```eos
+!
+management api gnmi
+   transport grpc default
+      port 6030
+      vrf mgmt
 ```
 
 ### Management API HTTP
@@ -71,7 +131,7 @@ interface Management0
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
-| MGMT | - | - |
+| mgmt | - | - |
 
 #### Management API HTTP Device Configuration
 
@@ -81,15 +141,104 @@ management api http-commands
    protocol https
    no shutdown
    !
-   vrf MGMT
+   vrf mgmt
       no shutdown
 ```
 
 ## Authentication
 
+### Local Users
+
+#### Local Users Summary
+
+| User | Privilege | Role | Disabled | Shell |
+| ---- | --------- | ---- | -------- | ----- |
+| admin | 15 | network-admin | False | - |
+
+#### Local Users Device Configuration
+
+```eos
+!
+username admin privilege 15 role network-admin secret sha512 <removed>
+username admin ssh-key ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMq7V3lWrRkB0w63hdbG4gEZ8KuLFwf7cRv/3ln9GOU9nZhrfRHvLSRj9c07DvLi1aR/hBWkXBeKWLDMZurtcV8= avd@3b32407628ed
+```
+
 ### Enable Password
 
 Enable password has been disabled
+
+### AAA Authorization
+
+#### AAA Authorization Summary
+
+| Type | User Stores |
+| ---- | ----------- |
+| Exec | local |
+
+Authorization for configuration commands is disabled.
+
+#### AAA Authorization Device Configuration
+
+```eos
+aaa authorization exec default local
+!
+```
+
+## Monitoring
+
+### TerminAttr Daemon
+
+#### TerminAttr Daemon Summary
+
+| CV Compression | CloudVision Servers | VRF | Authentication | Smash Excludes | Ingest Exclude | Bypass AAA |
+| -------------- | ------------------- | --- | -------------- | -------------- | -------------- | ---------- |
+| gzip | 1.2.3.4:443 | mgmt | token-secure,/mnt/flash/cv-onboarding-token | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | True |
+
+#### TerminAttr Daemon Device Configuration
+
+```eos
+!
+daemon TerminAttr
+   exec /usr/bin/TerminAttr -cvaddr=1.2.3.4:443 -cvauth=token-secure,/mnt/flash/cv-onboarding-token -cvvrf=mgmt -disableaaa -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs
+   no shutdown
+```
+
+### Flow Tracking
+
+#### Flow Tracking Sampled
+
+| Sample Size | Minimum Sample Size | Hardware Offload for IPv4 | Hardware Offload for IPv6 | Encapsulations |
+| ----------- | ------------------- | ------------------------- | ------------------------- | -------------- |
+| 5000 | default | disabled | disabled | ipv4, ipv6 |
+
+##### Trackers Summary
+
+| Tracker Name | Record Export On Inactive Timeout | Record Export On Interval | MPLS | Number of Exporters | Applied On | Table Size |
+| ------------ | --------------------------------- | ------------------------- | ---- | ------------------- | ---------- | ---------- |
+| FLOW-TRACKER | 70000 | 30000 | - | 1 | Ethernet1/1<br>Ethernet2/1<br>Ethernet3/1<br>Ethernet4/1<br>Ethernet31/1<br>Ethernet32/1 | - |
+
+##### Exporters Summary
+
+| Tracker Name | Exporter Name | Collector IP/Host | Collector Port | Local Interface |
+| ------------ | ------------- | ----------------- | -------------- | --------------- |
+| FLOW-TRACKER | CV-TELEMETRY | 127.0.0.1 | - | Loopback0 |
+
+#### Flow Tracking Device Configuration
+
+```eos
+!
+flow tracking sampled
+   encapsulation ipv4 ipv6
+   sample 5000
+   tracker FLOW-TRACKER
+      record export on inactive timeout 70000
+      record export on interval 30000
+      exporter CV-TELEMETRY
+         collector 127.0.0.1
+         local interface Loopback0
+         template interval 3600000
+   no shutdown
+```
 
 ## Spanning Tree
 
@@ -136,12 +285,12 @@ vlan internal order ascending range 1006 1199
 
 | Interface | Description | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet1/1 | P2P_s2-leaf1_Ethernet51/1 | - | 172.16.2.0/31 | default | 9214 | False | - | - |
-| Ethernet2/1 | P2P_s2-leaf2_Ethernet51/1 | - | 172.16.2.4/31 | default | 9214 | False | - | - |
-| Ethernet3/1 | P2P_s2-leaf3_Ethernet51/1 | - | 172.16.2.8/31 | default | 9214 | False | - | - |
-| Ethernet4/1 | P2P_s2-leaf4_Ethernet51/1 | - | 172.16.2.12/31 | default | 9214 | False | - | - |
-| Ethernet31/1 | P2P_s2-brdr1_Ethernet51/1 | - | 172.16.2.16/31 | default | 9214 | False | - | - |
-| Ethernet32/1 | P2P_s2-brdr2_Ethernet51/1 | - | 172.16.2.20/31 | default | 9214 | False | - | - |
+| Ethernet1/1 | P2P_s2-leaf1_Ethernet51/1 | - | 172.16.2.0/31 | default | 9200 | False | - | - |
+| Ethernet2/1 | P2P_s2-leaf2_Ethernet51/1 | - | 172.16.2.4/31 | default | 9200 | False | - | - |
+| Ethernet3/1 | P2P_s2-leaf3_Ethernet51/1 | - | 172.16.2.8/31 | default | 9200 | False | - | - |
+| Ethernet4/1 | P2P_s2-leaf4_Ethernet51/1 | - | 172.16.2.12/31 | default | 9200 | False | - | - |
+| Ethernet31/1 | P2P_s2-brdr1_Ethernet51/1 | - | 172.16.2.16/31 | default | 9200 | False | - | - |
+| Ethernet32/1 | P2P_s2-brdr2_Ethernet51/1 | - | 172.16.2.20/31 | default | 9200 | False | - | - |
 
 #### Ethernet Interfaces Device Configuration
 
@@ -150,43 +299,49 @@ vlan internal order ascending range 1006 1199
 interface Ethernet1/1
    description P2P_s2-leaf1_Ethernet51/1
    no shutdown
-   mtu 9214
+   mtu 9200
    no switchport
+   flow tracker sampled FLOW-TRACKER
    ip address 172.16.2.0/31
 !
 interface Ethernet2/1
    description P2P_s2-leaf2_Ethernet51/1
    no shutdown
-   mtu 9214
+   mtu 9200
    no switchport
+   flow tracker sampled FLOW-TRACKER
    ip address 172.16.2.4/31
 !
 interface Ethernet3/1
    description P2P_s2-leaf3_Ethernet51/1
    no shutdown
-   mtu 9214
+   mtu 9200
    no switchport
+   flow tracker sampled FLOW-TRACKER
    ip address 172.16.2.8/31
 !
 interface Ethernet4/1
    description P2P_s2-leaf4_Ethernet51/1
    no shutdown
-   mtu 9214
+   mtu 9200
    no switchport
+   flow tracker sampled FLOW-TRACKER
    ip address 172.16.2.12/31
 !
 interface Ethernet31/1
    description P2P_s2-brdr1_Ethernet51/1
    no shutdown
-   mtu 9214
+   mtu 9200
    no switchport
+   flow tracker sampled FLOW-TRACKER
    ip address 172.16.2.16/31
 !
 interface Ethernet32/1
    description P2P_s2-brdr2_Ethernet51/1
    no shutdown
-   mtu 9214
+   mtu 9200
    no switchport
+   flow tracker sampled FLOW-TRACKER
    ip address 172.16.2.20/31
 ```
 
@@ -234,14 +389,14 @@ service routing protocols model multi-agent
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | True |
-| MGMT | False |
+| mgmt | False |
 
 #### IP Routing Device Configuration
 
 ```eos
 !
 ip routing
-no ip routing vrf MGMT
+no ip routing vrf mgmt
 ```
 
 ### IPv6 Routing
@@ -251,7 +406,22 @@ no ip routing vrf MGMT
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | False |
-| MGMT | false |
+| mgmt | false |
+
+### Static Routes
+
+#### Static Routes Summary
+
+| VRF | Destination Prefix | Next Hop IP | Exit interface | Administrative Distance | Tag | Route Name | Metric |
+| --- | ------------------ | ----------- | -------------- | ----------------------- | --- | ---------- | ------ |
+| mgmt | 0.0.0.0/0 | 192.168.0.1 | - | 1 | - | - | - |
+
+#### Static Routes Device Configuration
+
+```eos
+!
+ip route vrf mgmt 0.0.0.0/0 192.168.0.1
+```
 
 ### Router BGP
 
@@ -441,11 +611,11 @@ route-map RM-CONN-2-BGP permit 10
 
 | VRF Name | IP Routing |
 | -------- | ---------- |
-| MGMT | disabled |
+| mgmt | disabled |
 
 ### VRF Instances Device Configuration
 
 ```eos
 !
-vrf instance MGMT
+vrf instance mgmt
 ```

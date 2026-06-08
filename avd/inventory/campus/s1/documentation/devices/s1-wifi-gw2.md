@@ -4,9 +4,17 @@
 
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
+  - [IP Name Servers](#ip-name-servers)
+  - [NTP](#ntp)
+  - [Management API gNMI](#management-api-gnmi)
   - [Management API HTTP](#management-api-http)
 - [Authentication](#authentication)
+  - [Local Users](#local-users)
   - [Enable Password](#enable-password)
+  - [AAA Authorization](#aaa-authorization)
+- [Monitoring](#monitoring)
+  - [TerminAttr Daemon](#terminattr-daemon)
+  - [Flow Tracking](#flow-tracking)
 - [MLAG](#mlag)
   - [MLAG Summary](#mlag-summary)
   - [MLAG Device Configuration](#mlag-device-configuration)
@@ -47,13 +55,13 @@
 
 | Management Interface | Description | Type | VRF | IP Address | Gateway |
 | -------------------- | ----------- | ---- | --- | ---------- | ------- |
-| Management1 | OOB_MANAGEMENT | oob | MGMT | 192.168.0.103/24 | - |
+| Management1 | OOB_MANAGEMENT | oob | mgmt | 192.168.0.103/24 | 192.168.0.1 |
 
 ##### IPv6
 
 | Management Interface | Description | Type | VRF | IPv6 Address | IPv6 Gateway |
 | -------------------- | ----------- | ---- | --- | ------------ | ------------ |
-| Management1 | OOB_MANAGEMENT | oob | MGMT | - | - |
+| Management1 | OOB_MANAGEMENT | oob | mgmt | - | - |
 
 #### Management Interfaces Device Configuration
 
@@ -62,8 +70,59 @@
 interface Management1
    description OOB_MANAGEMENT
    no shutdown
-   vrf MGMT
+   vrf mgmt
    ip address 192.168.0.103/24
+```
+
+### IP Name Servers
+
+#### IP Name Servers Summary
+
+| Name Server | VRF | Priority |
+| ----------- | --- | -------- |
+| 8.8.8.8 | mgmt | 0 |
+
+#### IP Name Servers Device Configuration
+
+```eos
+ip name-server vrf mgmt 8.8.8.8 priority 0
+```
+
+### NTP
+
+#### NTP Summary
+
+##### NTP Servers
+
+| Server | VRF | Preferred | Burst | iBurst | Version | Min Poll | Max Poll | Local-interface | Key |
+| ------ | --- | --------- | ----- | ------ | ------- | -------- | -------- | --------------- | --- |
+| time1.google.com | mgmt | - | - | True | - | - | - | - | - |
+| time2.google.com | mgmt | - | - | True | - | - | - | - | - |
+
+#### NTP Device Configuration
+
+```eos
+!
+ntp server vrf mgmt time1.google.com iburst
+ntp server vrf mgmt time2.google.com iburst
+```
+
+### Management API gNMI
+
+#### Management API gNMI Summary
+
+| Transport | SSL Profile | VRF | Notification Timestamp | ACL | Port | Authorization Requests |
+| --------- | ----------- | --- | ---------------------- | --- | ---- | ---------------------- |
+| default | - | mgmt | last-change-time | - | 6030 | - |
+
+#### Management API gNMI Device Configuration
+
+```eos
+!
+management api gnmi
+   transport grpc default
+      port 6030
+      vrf mgmt
 ```
 
 ### Management API HTTP
@@ -78,7 +137,7 @@ interface Management1
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
-| MGMT | - | - |
+| mgmt | - | - |
 
 #### Management API HTTP Device Configuration
 
@@ -88,15 +147,104 @@ management api http-commands
    protocol https
    no shutdown
    !
-   vrf MGMT
+   vrf mgmt
       no shutdown
 ```
 
 ## Authentication
 
+### Local Users
+
+#### Local Users Summary
+
+| User | Privilege | Role | Disabled | Shell |
+| ---- | --------- | ---- | -------- | ----- |
+| admin | 15 | network-admin | False | - |
+
+#### Local Users Device Configuration
+
+```eos
+!
+username admin privilege 15 role network-admin secret sha512 <removed>
+username admin ssh-key ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMq7V3lWrRkB0w63hdbG4gEZ8KuLFwf7cRv/3ln9GOU9nZhrfRHvLSRj9c07DvLi1aR/hBWkXBeKWLDMZurtcV8= avd@3b32407628ed
+```
+
 ### Enable Password
 
 Enable password has been disabled
+
+### AAA Authorization
+
+#### AAA Authorization Summary
+
+| Type | User Stores |
+| ---- | ----------- |
+| Exec | local |
+
+Authorization for configuration commands is disabled.
+
+#### AAA Authorization Device Configuration
+
+```eos
+aaa authorization exec default local
+!
+```
+
+## Monitoring
+
+### TerminAttr Daemon
+
+#### TerminAttr Daemon Summary
+
+| CV Compression | CloudVision Servers | VRF | Authentication | Smash Excludes | Ingest Exclude | Bypass AAA |
+| -------------- | ------------------- | --- | -------------- | -------------- | -------------- | ---------- |
+| gzip | 1.2.3.4:443 | mgmt | token-secure,/mnt/flash/cv-onboarding-token | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | True |
+
+#### TerminAttr Daemon Device Configuration
+
+```eos
+!
+daemon TerminAttr
+   exec /usr/bin/TerminAttr -cvaddr=1.2.3.4:443 -cvauth=token-secure,/mnt/flash/cv-onboarding-token -cvvrf=mgmt -disableaaa -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs
+   no shutdown
+```
+
+### Flow Tracking
+
+#### Flow Tracking Sampled
+
+| Sample Size | Minimum Sample Size | Hardware Offload for IPv4 | Hardware Offload for IPv6 | Encapsulations |
+| ----------- | ------------------- | ------------------------- | ------------------------- | -------------- |
+| 5000 | default | disabled | disabled | ipv4, ipv6 |
+
+##### Trackers Summary
+
+| Tracker Name | Record Export On Inactive Timeout | Record Export On Interval | MPLS | Number of Exporters | Applied On | Table Size |
+| ------------ | --------------------------------- | ------------------------- | ---- | ------------------- | ---------- | ---------- |
+| FLOW-TRACKER | 70000 | 30000 | - | 1 | Port-Channel491<br>Port-Channel1 | - |
+
+##### Exporters Summary
+
+| Tracker Name | Exporter Name | Collector IP/Host | Collector Port | Local Interface |
+| ------------ | ------------- | ----------------- | -------------- | --------------- |
+| FLOW-TRACKER | CV-TELEMETRY | 127.0.0.1 | - | Loopback0 |
+
+#### Flow Tracking Device Configuration
+
+```eos
+!
+flow tracking sampled
+   encapsulation ipv4 ipv6
+   sample 5000
+   tracker FLOW-TRACKER
+      record export on inactive timeout 70000
+      record export on interval 30000
+      exporter CV-TELEMETRY
+         collector 127.0.0.1
+         local interface Loopback0
+         template interval 3600000
+   no shutdown
+```
 
 ## MLAG
 
@@ -261,6 +409,7 @@ interface Port-Channel1
    switchport trunk allowed vlan 21,100-103
    switchport mode trunk
    switchport
+   flow tracker sampled FLOW-TRACKER
    mlag 1
 !
 interface Port-Channel491
@@ -269,6 +418,7 @@ interface Port-Channel491
    switchport mode trunk
    switchport trunk group MLAG
    switchport
+   flow tracker sampled FLOW-TRACKER
 ```
 
 ### Loopback Interfaces
@@ -304,7 +454,7 @@ interface Loopback1
 | Interface | Description | VRF |  MTU | Shutdown |
 | --------- | ----------- | --- | ---- | -------- |
 | Vlan21 | WIFI-GW-Transit | default | - | - |
-| Vlan4094 | MLAG | default | 9214 | False |
+| Vlan4094 | MLAG | default | 9200 | False |
 
 ##### IPv4
 
@@ -325,7 +475,7 @@ interface Vlan21
 interface Vlan4094
    description MLAG
    no shutdown
-   mtu 9214
+   mtu 9200
    no autostate
    ip address 10.251.1.1/31
 ```
@@ -399,14 +549,14 @@ ip virtual-router mac-address 00:1c:73:99:99:99
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | True |
-| MGMT | False |
+| mgmt | False |
 
 #### IP Routing Device Configuration
 
 ```eos
 !
 ip routing
-no ip routing vrf MGMT
+no ip routing vrf mgmt
 ```
 
 ### IPv6 Routing
@@ -416,7 +566,7 @@ no ip routing vrf MGMT
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | False |
-| MGMT | false |
+| mgmt | false |
 
 ### Static Routes
 
@@ -424,6 +574,7 @@ no ip routing vrf MGMT
 
 | VRF | Destination Prefix | Next Hop IP | Exit interface | Administrative Distance | Tag | Route Name | Metric |
 | --- | ------------------ | ----------- | -------------- | ----------------------- | --- | ---------- | ------ |
+| mgmt | 0.0.0.0/0 | 192.168.0.1 | - | 1 | - | - | - |
 | default | 0.0.0.0/0 | 10.21.21.1 | - | 1 | - | - | - |
 
 #### Static Routes Device Configuration
@@ -431,6 +582,7 @@ no ip routing vrf MGMT
 ```eos
 !
 ip route 0.0.0.0/0 10.21.21.1
+ip route vrf mgmt 0.0.0.0/0 192.168.0.1
 ```
 
 ## Multicast
@@ -454,11 +606,11 @@ ip route 0.0.0.0/0 10.21.21.1
 
 | VRF Name | IP Routing |
 | -------- | ---------- |
-| MGMT | disabled |
+| mgmt | disabled |
 
 ### VRF Instances Device Configuration
 
 ```eos
 !
-vrf instance MGMT
+vrf instance mgmt
 ```
