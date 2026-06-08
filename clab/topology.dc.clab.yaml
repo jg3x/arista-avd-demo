@@ -1,4 +1,4 @@
-name: avd-demo
+name: dc-avd-demo
 prefix: ""
 mgmt:
   ipv4-subnet: 192.168.0.0/24
@@ -104,12 +104,6 @@ topology:
     s1-brdr2:
       group: border
       mgmt-ipv4: 192.168.0.101
-    s1-wifi-gw1:
-      group: leaf
-      mgmt-ipv4: 192.168.0.102
-    s1-wifi-gw2:
-      group: leaf
-      mgmt-ipv4: 192.168.0.103
     s1-host1:
       group: server
       binds:
@@ -228,8 +222,6 @@ topology:
     - endpoints: [ "s1-leaf3:eth50", "s1-leaf4:eth50" ]
     - endpoints: [ "s1-brdr1:eth49", "s1-brdr2:eth49" ]
     - endpoints: [ "s1-brdr1:eth50", "s1-brdr2:eth50" ]
-    - endpoints: [ "s1-wifi-gw1:eth49", "s1-wifi-gw2:eth49" ]
-    - endpoints: [ "s1-wifi-gw1:eth50", "s1-wifi-gw2:eth50" ]
     ## fabric links
     - endpoints: [ "s1-spine1:eth1", "s1-leaf1:eth51" ]
     - endpoints: [ "s1-spine1:eth2", "s1-leaf2:eth51" ]
@@ -253,11 +245,6 @@ topology:
     - endpoints: [ "s1-leaf4:eth1", "s1-host2:eth2" ]
     - endpoints: [ "s1-leaf3:eth2", "s1-host4:eth1" ]
     - endpoints: [ "s1-leaf4:eth2", "s1-host4:eth2" ]
-    ## WiFi gateway links
-    - endpoints: [ "s1-brdr1:eth1", "s1-wifi-gw1:eth1" ]
-    - endpoints: [ "s1-brdr1:eth2", "s1-wifi-gw2:eth1" ]
-    - endpoints: [ "s1-brdr2:eth1", "s1-wifi-gw1:eth2" ]
-    - endpoints: [ "s1-brdr2:eth2", "s1-wifi-gw2:eth2" ]
 
     # site 2
     ## mlag links
