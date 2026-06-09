@@ -96,7 +96,7 @@ subscriptions:
       - /interfaces/interface/state/counters
     mode: stream
     stream-mode: sample
-    sample-interval: 10s
+    sample-interval: 5s
 
   interface-oper-status:
     paths:
@@ -108,7 +108,7 @@ subscriptions:
   process-cpu:
     mode: stream
     stream-mode: sample
-    sample-interval: 15s
+    sample-interval: 30s
     paths:
       - /openconfig-system:system/processes/process/state/cpu-usage-system
       - /openconfig-system:system/processes/process/state/cpu-usage-user
@@ -117,7 +117,7 @@ subscriptions:
   process-mem:
     mode: stream
     stream-mode: sample
-    sample-interval: 15s
+    sample-interval: 30s
     paths:
       - /openconfig-system:system/processes/process/state/memory-usage
       - /openconfig-system:system/processes/process/state/memory-utilization
@@ -125,7 +125,7 @@ subscriptions:
   system-utilization:
     mode: stream
     stream-mode: sample
-    sample-interval: 15s
+    sample-interval: 30s
     paths:
       - /openconfig-system:system/cpus/cpu[index=ALL]/state/openconfig-system:total
       - /openconfig-system:system/cpus/cpu[index=ALL]/state/openconfig-system:user
@@ -134,7 +134,7 @@ subscriptions:
   bgp-state:
     mode: stream
     stream-mode: sample
-    sample-interval: 10s
+    sample-interval: 5s
     paths:
       - /openconfig-network-instance:network-instances/network-instance[name=default]/protocols/protocol/bgp/neighbors/neighbor/state/session-state
       - /openconfig-network-instance:network-instances/network-instance[name=default]/protocols/protocol/bgp/neighbors/neighbor/state/messages
