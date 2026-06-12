@@ -28,7 +28,7 @@ services:
   #   volumes:
   #     - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
   #   ports:
-  #     - "9273:9273"
+  #     - "9275:9273"
   #   networks:
   #     - clab_net
 
@@ -53,6 +53,16 @@ services:
     volumes:
       - ./grafana/provisioning:/etc/grafana/provisioning:ro
       - grafana_data:/var/lib/grafana
+    networks:
+      - clab_net
+
+  loki:
+    image: grafana/loki:3.4.2
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki/loki-config.yml:/etc/loki/local-config.yaml
+    command: -config.file=/etc/loki/local-config.yaml
     networks:
       - clab_net
 
