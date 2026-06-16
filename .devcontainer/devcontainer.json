@@ -1,6 +1,6 @@
 {
     "name": "arista-avd-demo",
-    "image":"ghcr.io/aristanetworks/avd/universal:python3.12-avd-v5.7.0",
+    "image":"ghcr.io/aristanetworks/avd/universal:python3.14-avd-v6.2.0",
     "postCreateCommand": "bash .devcontainer/setup.sh",
     "features": {
         // Containerlab will run in a docker-in-docker container
