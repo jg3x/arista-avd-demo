@@ -1,0 +1,232 @@
+name: mss-demo
+prefix: ""
+mgmt:
+  ipv4-subnet: 192.168.0.0/24
+topology:
+  kinds:
+    arista_ceos:
+      image: arista/ceos:latest
+      env:
+        CLAB_MGMT_VRF: mgmt
+        CVADDR: ${CV_TATTR_ADDR:=none}
+      startup-config: config/eos/default_startup.cfg
+    linux:
+      image: avd/alpine:3.19.7
+  groups:
+    spine:
+      kind: arista_ceos
+      binds:
+        - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
+        - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
+        - config/eos/EosIntfMapping/DCS-7050CX3-32S.json:/mnt/flash/EosIntfMapping.json:ro
+    leaf:
+      kind: arista_ceos
+      binds:
+        - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
+        - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
+        - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
+    border:
+      kind: arista_ceos
+      binds:
+        - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
+        - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
+        - config/eos/EosIntfMapping/DCS-7280SR3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
+    server:
+      kind: arista_ceos
+      startup-config: config/eos/server_startup.cfg
+  nodes:
+    # site 1
+    s1-spine1:
+      group: spine
+      mgmt-ipv4: 192.168.0.10
+      kind: arista_ceos
+      binds:
+        - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
+        - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
+        - config/eos/EosIntfMapping/DCS-7050CX3-32S.json:/mnt/flash/EosIntfMapping.json:ro
+    s1-spine2:
+      group: spine
+      mgmt-ipv4: 192.168.0.11
+      kind: arista_ceos
+      binds:
+        - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
+        - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
+        - config/eos/EosIntfMapping/DCS-7050CX3-32S.json:/mnt/flash/EosIntfMapping.json:ro
+    s1-leaf1:
+      group: leaf
+      mgmt-ipv4: 192.168.0.12
+      kind: arista_ceos
+      binds:
+        - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
+        - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
+        - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
+    s1-leaf2:
+      group: leaf
+      mgmt-ipv4: 192.168.0.13
+      kind: arista_ceos
+      binds:
+        - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
+        - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
+        - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
+    s1-leaf3:
+      group: leaf
+      mgmt-ipv4: 192.168.0.14
+      kind: arista_ceos
+      binds:
+        - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
+        - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
+        - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
+    s1-leaf4:
+      group: leaf
+      mgmt-ipv4: 192.168.0.15
+      kind: arista_ceos
+      binds:
+        - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
+        - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
+        - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
+    s1-brdr1:
+      group: border
+      mgmt-ipv4: 192.168.0.100
+    s1-brdr2:
+      group: border
+      mgmt-ipv4: 192.168.0.101
+    s1-host1:
+      group: server
+    s1-host2:
+      group: server
+    # site 2
+    s2-spine1:
+      group: spine
+      mgmt-ipv4: 192.168.0.20
+      kind: arista_ceos
+      binds:
+        - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
+        - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
+        - config/eos/EosIntfMapping/DCS-7050CX3-32S.json:/mnt/flash/EosIntfMapping.json:ro
+    s2-spine2:
+      group: spine
+      mgmt-ipv4: 192.168.0.21
+      kind: arista_ceos
+      binds:
+        - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
+        - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
+        - config/eos/EosIntfMapping/DCS-7050CX3-32S.json:/mnt/flash/EosIntfMapping.json:ro
+    s2-leaf1:
+      group: leaf
+      mgmt-ipv4: 192.168.0.22
+      kind: arista_ceos
+      binds:
+        - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
+        - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
+        - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
+    s2-leaf2:
+      group: leaf
+      mgmt-ipv4: 192.168.0.23
+      kind: arista_ceos
+      binds:
+        - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
+        - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
+        - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
+    s2-leaf3:
+      group: leaf
+      mgmt-ipv4: 192.168.0.24
+      kind: arista_ceos
+      binds:
+        - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
+        - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
+        - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
+    s2-leaf4:
+      group: leaf
+      mgmt-ipv4: 192.168.0.25
+      kind: arista_ceos
+      binds:
+        - config/eos/ceos_config/__clabNodeName__-ceos-config:/mnt/flash/ceos-config
+        - config/eos/ceos_config/__clabNodeName__-system_mac_address:/mnt/flash/system_mac_address
+        - config/eos/cv-onboarding.token:/mnt/flash/cv-onboarding-token
+        - config/eos/EosIntfMapping/DCS-7050SX3-48YC8.json:/mnt/flash/EosIntfMapping.json:ro
+    s2-brdr1:
+      group: border
+      mgmt-ipv4: 192.168.0.200
+    s2-brdr2:
+      group: border
+      mgmt-ipv4: 192.168.0.201
+    s2-host1:
+      group: server
+    s2-host2:
+      group: server
+  links:
+    # site 1
+    ## mlag links
+    - endpoints: [ "s1-leaf1:eth49", "s1-leaf2:eth49" ]
+    - endpoints: [ "s1-leaf1:eth50", "s1-leaf2:eth50" ]
+    - endpoints: [ "s1-leaf3:eth49", "s1-leaf4:eth49" ]
+    - endpoints: [ "s1-leaf3:eth50", "s1-leaf4:eth50" ]
+    - endpoints: [ "s1-brdr1:eth49", "s1-brdr2:eth49" ]
+    - endpoints: [ "s1-brdr1:eth50", "s1-brdr2:eth50" ]
+    ## fabric links
+    - endpoints: [ "s1-spine1:eth1", "s1-leaf1:eth51" ]
+    - endpoints: [ "s1-spine1:eth2", "s1-leaf2:eth51" ]
+    - endpoints: [ "s1-spine1:eth3", "s1-leaf3:eth51" ]
+    - endpoints: [ "s1-spine1:eth4", "s1-leaf4:eth51" ]
+    - endpoints: [ "s1-spine1:eth31", "s1-brdr1:eth51" ]
+    - endpoints: [ "s1-spine1:eth32", "s1-brdr2:eth51" ]
+
+    - endpoints: [ "s1-spine2:eth1", "s1-leaf1:eth52" ]
+    - endpoints: [ "s1-spine2:eth2", "s1-leaf2:eth52" ]
+    - endpoints: [ "s1-spine2:eth3", "s1-leaf3:eth52" ]
+    - endpoints: [ "s1-spine2:eth4", "s1-leaf4:eth52" ]
+    - endpoints: [ "s1-spine2:eth31", "s1-brdr1:eth52" ]
+    - endpoints: [ "s1-spine2:eth32", "s1-brdr2:eth52" ]
+    ## server links
+    - endpoints: [ "s1-leaf1:eth1", "s1-host1:eth1" ]
+    - endpoints: [ "s1-leaf2:eth1", "s1-host1:eth2" ]
+    - endpoints: [ "s1-leaf3:eth1", "s1-host2:eth1" ]
+    - endpoints: [ "s1-leaf4:eth1", "s1-host2:eth2" ]
+
+    # site 2
+    ## mlag links
+    - endpoints: [ "s2-leaf1:eth49", "s2-leaf2:eth49" ]
+    - endpoints: [ "s2-leaf1:eth50", "s2-leaf2:eth50" ]
+    - endpoints: [ "s2-leaf3:eth49", "s2-leaf4:eth49" ]
+    - endpoints: [ "s2-leaf3:eth50", "s2-leaf4:eth50" ]
+    - endpoints: [ "s2-brdr1:eth49", "s2-brdr2:eth49" ]
+    - endpoints: [ "s2-brdr1:eth50", "s2-brdr2:eth50" ]
+    ## fabric links
+    - endpoints: [ "s2-spine1:eth1", "s2-leaf1:eth51" ]
+    - endpoints: [ "s2-spine1:eth2", "s2-leaf2:eth51" ]
+    - endpoints: [ "s2-spine1:eth3", "s2-leaf3:eth51" ]
+    - endpoints: [ "s2-spine1:eth4", "s2-leaf4:eth51" ]
+    - endpoints: [ "s2-spine1:eth31", "s2-brdr1:eth51" ]
+    - endpoints: [ "s2-spine1:eth32", "s2-brdr2:eth51" ]
+
+    - endpoints: [ "s2-spine2:eth1", "s2-leaf1:eth52" ]
+    - endpoints: [ "s2-spine2:eth2", "s2-leaf2:eth52" ]
+    - endpoints: [ "s2-spine2:eth3", "s2-leaf3:eth52" ]
+    - endpoints: [ "s2-spine2:eth4", "s2-leaf4:eth52" ]
+    - endpoints: [ "s2-spine2:eth31", "s2-brdr1:eth52" ]
+    - endpoints: [ "s2-spine2:eth32", "s2-brdr2:eth52" ]
+    ## server links
+    - endpoints: [ "s2-leaf1:eth1", "s2-host1:eth1" ]
+    - endpoints: [ "s2-leaf2:eth1", "s2-host1:eth2" ]
+    - endpoints: [ "s2-leaf3:eth1", "s2-host2:eth1" ]
+    - endpoints: [ "s2-leaf4:eth1", "s2-host2:eth2" ]
+
+    # dci links
+    - endpoints: [ "s1-brdr1:eth54", "s2-brdr1:eth54" ]
+    - endpoints: [ "s1-brdr1:eth55", "s2-brdr2:eth54" ]
+    - endpoints: [ "s1-brdr2:eth54", "s2-brdr1:eth55" ]
+    - endpoints: [ "s1-brdr2:eth55", "s2-brdr2:eth55" ]
