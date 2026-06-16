@@ -1,0 +1,29 @@
+---
+SITE2:
+  children:
+    SITE2_FABRIC:
+      children:
+        SPINES:
+          vars:
+            type: spine
+          hosts:
+            s2-spine1:
+            s2-spine2:
+        LEAFS:
+          vars:
+            type: l3leaf
+          hosts:
+            s2-leaf1:
+            s2-leaf2:
+            s2-leaf3:
+            s2-leaf4:
+            s2-brdr1:
+            s2-brdr2:
+    NETWORK_SERVICES:
+      children:
+        SPINES:
+        LEAFS:
+    CONNECTED_ENDPOINTS:
+      children:
+        SPINES:
+        LEAFS:
