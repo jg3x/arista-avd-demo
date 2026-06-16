@@ -3,10 +3,6 @@ fabric_name: SITE1_FABRIC
 dc_name: SITE1
 pod_name: S1-POD01
 
-# Set Design Type to L3L2 with EVPN VXLAN
-design:
-  type: l3ls-evpn
-
 # CloudVision Topology Tags
 generate_cv_tags:
   topology_hints: true
