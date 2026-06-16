@@ -1,0 +1,53 @@
+---
+port_profiles:
+  - profile: PP-HOST-ESI
+    mode: "trunk"
+    vlans: "10,20,101-102,201"
+    mtu: 9000
+    ethernet_segment:
+      short_esi: auto
+      redundancy: all-active
+    structured_config:
+      vlan_translations:
+        - from: 101-102
+          to: 10
+          direction: out
+        - from: 101-102
+          to: 10
+          direction: in
+        - from: '201'
+          to: 20
+          direction: out
+        - from: '201'
+          to: 20
+          direction: in
+
+###########################################################
+# ---------------- Endpoint Connectivity ---------------- #
+###########################################################
+
+servers:
+
+# # --------------------------------------------------------#
+# # Site2 RACK1 Endpoints
+# # --------------------------------------------------------#
+
+  - name: s2-host1                                      # Server name
+    rack: RACK1                                         # Informational RACK (optional)
+    adapters:
+      - endpoint_ports: [ eth1, eth2 ]                  # Server port to connect (optional)
+        switch_ports: [ Ethernet1, Ethernet1 ]          # Switch port to connect server (required)
+        switches: [ s2-leaf1,s2-leaf2 ]                 # Switch to connect server (required)
+        profile: PP-HOST-ESI                              # Port profile to apply (required)
+
+# # --------------------------------------------------------#
+# # Site2 RACK2 Endpoints
+# # --------------------------------------------------------#
+
+  - name: s2-host2                                      # Server name
+    rack: RACK2                                         # Informational RACK (optional)
+    adapters:
+      - endpoint_ports: [ eth1, eth2 ]                  # Server port to connect (optional)
+        switch_ports: [ Ethernet1, Ethernet1 ]          # Switch port to connect server (required)
+        switches: [ s2-leaf3, s2-leaf4 ]                # Switch to connect server (required)
+        profile: PP-HOST-ESI                             # Port profile to apply (required)
