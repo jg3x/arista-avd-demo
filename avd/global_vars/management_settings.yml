@@ -1,4 +1,4 @@
-management_api_gnmi:
+csc_management_api_gnmi:
   transport:
     grpc:
       - name: default
