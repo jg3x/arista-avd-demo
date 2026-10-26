@@ -36,7 +36,7 @@ def write_ceos_config_file(clab_file_path:str, config_dir_path:str):
                             mac = generate_random_mac_address()
                             serial = generate_random_serial_number()
                             with open(ceos_config,'w') as file:
-                                file.write(f"SERIALNUMBER={serial}")
+                                file.write(f"SERIALNUMBER={serial}\nSYSTEMMACADDR={mac}")
                             
                             with open(serial_num,'w') as file:
                                 file.write(f"{mac}")
